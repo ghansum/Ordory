@@ -8,4 +8,18 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Values to connect to the API-->
+    <string name="ws_urlConnect">http://appspaces.fr/esgi/shopping_list/account/login.php</string>
+    <string name="ws_urlSubscribe">http://appspaces.fr/esgi/shopping_list/account/subscribe.php</string>
+
+    <string name="ws_urlProductCreate">http://appspaces.fr/esgi/shopping_list/product/create.php</string>
+    <string name="ws_urlProductEdit">http://appspaces.fr/esgi/shopping_list/product/edit.php</string>
+    <string name="ws_urlProductList">http://appspaces.fr/esgi/shopping_list/product/list.php</string>
+    <string name="ws_urlProductRemove">http://appspaces.fr/esgi/shopping_list/product/remove.php</string>
+
+    <string name="ws_urlShoppingListCreate">http://appspaces.fr/esgi/shopping_list/shopping_list/create.php</string>
+    <string name="ws_urlShoppingListEdit">http://appspaces.fr/esgi/shopping_list/shopping_list/edit.php</string>
+    <string name="ws_urlShoppingListList">http://appspaces.fr/esgi/shopping_list/shopping_list/list.php</string>
+    <string name="ws_urlShoppingListRemove">http://appspaces.fr/esgi/shopping_list/shopping_list/remove.php</string>
 </resources>
