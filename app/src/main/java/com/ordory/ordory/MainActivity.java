@@ -17,6 +17,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.utils.Constant;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
                    BracketFragment.OnFragmentInteractionListener, ProductsFragment.OnFragmentInteractionListener {
@@ -24,6 +38,13 @@ public class MainActivity extends AppCompatActivity
     private Button registerBtn;
     Fragment fragment = null;
     Button btnview = null;
+    private String resultConnectJson = null;
+    public String email = "toto@gmail.com";
+    public String password = "azerty";
+    JSONObject mainObject;
+    JSONObject resultJsonConnect;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +76,17 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         );
+
+        threadConnect.start();
+        //JSONObject codeObject = null;
+        /*try {
+            resultJsonConnect = mainObject.getJSONObject("result");
+            //codeObject = mainObject.getJSONObject("code");
+            //Log.e("Code",codeObject.getString("code"));
+            Log.e("LastName",resultJsonConnect.getString("lastname"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -131,4 +163,60 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    Thread threadConnect = new Thread(new Runnable() {
+        public void run() {
+            // your logic
+            String result=null;
+            InputStream in=null;
+            URL url;
+            HttpsURLConnection conn=null;
+            try{
+                System.out.println("Entree dans la methode readTwitter");
+                // get URL content
+                url = new URL(Constant.WS_CONNECT_URL+"?email="+email+"&password="+password);
+                conn = (HttpsURLConnection) url.openConnection();
+
+                //System.setProperty("http.keepAlive", "false");
+                conn.setReadTimeout(5000);
+                conn.setConnectTimeout(5000);
+                conn.setUseCaches(false);
+                conn.setDoInput(true);
+                conn.setDoOutput(false);
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-length", "0");
+                conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+                conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+                System.out.println("methode readTwitter : inputstream");
+                in=conn.getInputStream(); // slowest part so far, several seconds spent there
+                // open the stream and put it into BufferedReader
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                String line;
+                StringBuilder builder = new StringBuilder();
+                while ((line=br.readLine())!= null) {
+                    builder.append(line);
+                }
+
+                result=builder.toString();
+                mainObject = new JSONObject(result);
+                System.out.print(result);
+                br.close();
+
+            }catch(MalformedURLException e) {
+                result=null;
+            } catch (IOException e) {
+                result=null;
+            } catch (Exception e) {
+                result=null;
+            }
+
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            conn.disconnect();
+            System.out.println(result);
+        }
+    });
 }
