@@ -187,7 +187,6 @@ public class MainActivity extends AppCompatActivity
                 conn.setRequestProperty("Content-length", "0");
                 conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
                 conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-                System.out.println("methode readTwitter : inputstream");
                 in=conn.getInputStream(); // slowest part so far, several seconds spent there
                 // open the stream and put it into BufferedReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
