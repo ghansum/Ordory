@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         /*
-        TODO: connect the user and redirect him in another page
+        TODO: connect the user and redirect him in another page ff
          */
 
         btnview =(Button)findViewById(R.id.redirectConnect);
