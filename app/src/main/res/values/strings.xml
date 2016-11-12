@@ -22,4 +22,8 @@
     <string name="ws_urlShoppingListEdit">http://appspaces.fr/esgi/shopping_list/shopping_list/edit.php</string>
     <string name="ws_urlShoppingListList">http://appspaces.fr/esgi/shopping_list/shopping_list/list.php</string>
     <string name="ws_urlShoppingListRemove">http://appspaces.fr/esgi/shopping_list/shopping_list/remove.php</string>
+
+    <!-- String View -->
+    <!-- String for list shopping list view-->
+    <string name="list_shoppinglist_title">Mes listes de course</string>
 </resources>

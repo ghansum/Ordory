@@ -4,7 +4,6 @@ import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +18,6 @@ import android.widget.Button;
 
 import com.utils.Constant;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -33,7 +31,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
-                   BracketFragment.OnFragmentInteractionListener, ProductsFragment.OnFragmentInteractionListener {
+                   BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener {
 
     private Button registerBtn;
     Fragment fragment = null;
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the login action
             fragment = new ConnectFragment();
         } else if (id == R.id.nav_products) {
-            fragment = new ProductsFragment();
+            fragment = new ListShoppingLishFragment();
         } else if (id == R.id.nav_bracket) {
             fragment = new BracketFragment();
         } else if (id == R.id.nav_manage) {
