@@ -1,5 +1,6 @@
 package com.ordory.ordory;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,10 @@ public class ListShoppingLishFragment extends Fragment {
     private ListView productListView;
 
     private Button buttonAddShoppingList;
+
+    private Fragment fragment;
+
+    private FragmentTransaction transaction;
 
     public ListShoppingLishFragment() {
         // Required empty public constructor

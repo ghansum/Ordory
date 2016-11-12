@@ -131,6 +131,8 @@ public class MainActivity extends AppCompatActivity
             fragment = new RegisterFragment();
         }else if (id == R.id.nav_home) {
             setContentView(R.layout.activity_main);
+        }else if (id == R.id.button_add_shopping_list){
+            fragment = new ListShoppingLishFragment();
         }
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
