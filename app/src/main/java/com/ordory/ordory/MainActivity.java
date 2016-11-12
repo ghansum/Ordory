@@ -33,7 +33,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
-                   BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener {
+                   BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener {
 
     private Button registerBtn;
     Fragment fragment = null;
@@ -131,8 +131,10 @@ public class MainActivity extends AppCompatActivity
             fragment = new RegisterFragment();
         }else if (id == R.id.nav_home) {
             setContentView(R.layout.activity_main);
+        }else if(id == R.id.btn_create_shoplist){
+            fragment = new ListFormularFragment();
         }
-        
+
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.homeFragment, fragment);
