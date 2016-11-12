@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_home) {
             setContentView(R.layout.activity_main);
         }
+        
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.homeFragment, fragment);
