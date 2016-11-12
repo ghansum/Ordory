@@ -21,8 +21,8 @@
             android:layout_height="80dp"
             android:textSize="36dp"
             android:textAlignment="center"
-            android:layout_marginTop="23dp"
-            android:layout_marginBottom="27dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="24dp"
             android:paddingTop="10dp"
             android:textColor="@color/colorPrimary"
             android:text="Connexion"/>
@@ -31,13 +31,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="E-mail"
-            android:id="@+id/email"
+            android:id="@+id/email_connect"
             />
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:id="@+id/password"
+            android:id="@+id/password_connect"
             />
 
         <Button
@@ -50,6 +50,19 @@
             android:textSize="24dp"
             android:text="Connexion"
             />
+
+        <TextView
+            android:id="@+id/errorConnect"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textSize="14dp"
+            android:textAlignment="center"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="27dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/colorAccent"
+            android:text=""/>
+
     </LinearLayout>
 
 </FrameLayout>

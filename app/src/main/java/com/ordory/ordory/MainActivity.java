@@ -16,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.utils.Constant;
+import com.utils.MyRunnable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,12 +40,8 @@ public class MainActivity extends AppCompatActivity
     private Button registerBtn;
     Fragment fragment = null;
     Button btnview = null;
-    private String resultConnectJson = null;
-    public String email = "toto@gmail.com";
-    public String password = "azerty";
-    JSONObject mainObject;
-    JSONObject resultJsonConnect;
-
+    public static JSONObject resultJsonConnect;
+    public static JSONObject mainObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //myThread.start();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -61,32 +59,20 @@ public class MainActivity extends AppCompatActivity
         /*
         TODO: connect the user and redirect him in another page
          */
-        btnview =(Button)findViewById(R.id.connect_button);
+
+        btnview =(Button)findViewById(R.id.redirectConnect);
         btnview.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     fragment = new ConnectFragment().newInstance("","");
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.homeFragment, fragment);
-                    Log.e("click","click sur le bouton");
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
             }
         );
-
-        threadConnect.start();
-        //JSONObject codeObject = null;
-        /*try {
-            resultJsonConnect = mainObject.getJSONObject("result");
-            //codeObject = mainObject.getJSONObject("code");
-            //Log.e("Code",codeObject.getString("code"));
-            Log.e("LastName",resultJsonConnect.getString("lastname"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -164,20 +150,25 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    Thread threadConnect = new Thread(new Runnable() {
+    //this.editEmail = (EditText) findViewById(R.id.email_connect);
+    //editPwd = (EditText) findViewById(R.id.password_connect);
+
+    // get values of email and password
+    //String email = editEmail.getText().toString();
+    //String password = editPwd.getText().toString();
+    //String params = "?email="+email+"&password="+password;
+    public static Thread myThread = new Thread(new Runnable() {
         public void run() {
-            // your logic
             String result=null;
             InputStream in=null;
             URL url;
             HttpsURLConnection conn=null;
-            try{
-                System.out.println("Entree dans la methode readTwitter");
-                // get URL content
-                url = new URL(Constant.WS_CONNECT_URL+"?email="+email+"&password="+password);
-                conn = (HttpsURLConnection) url.openConnection();
 
-                //System.setProperty("http.keepAlive", "false");
+            try{
+                // get URL content
+                String test = "https://appspaces.fr/esgi/shopping_list/account/login.php?email=toto@gmail.com&password=azerty";
+                url = new URL(test);
+                conn = (HttpsURLConnection) url.openConnection();
                 conn.setReadTimeout(5000);
                 conn.setConnectTimeout(5000);
                 conn.setUseCaches(false);
@@ -187,7 +178,7 @@ public class MainActivity extends AppCompatActivity
                 conn.setRequestProperty("Content-length", "0");
                 conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
                 conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-                in=conn.getInputStream(); // slowest part so far, several seconds spent there
+                in=conn.getInputStream();
                 // open the stream and put it into BufferedReader
                 BufferedReader br = new BufferedReader(new InputStreamReader(in));
                 String line;
@@ -195,12 +186,12 @@ public class MainActivity extends AppCompatActivity
                 while ((line=br.readLine())!= null) {
                     builder.append(line);
                 }
-
                 result=builder.toString();
                 mainObject = new JSONObject(result);
-                System.out.print(result);
+                resultJsonConnect = mainObject.getJSONObject("result");
+                System.out.println("Code : "+mainObject.getString("code"));
+                System.out.print("Result : "+result);
                 br.close();
-
             }catch(MalformedURLException e) {
                 result=null;
             } catch (IOException e) {

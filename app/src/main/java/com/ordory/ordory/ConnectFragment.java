@@ -1,14 +1,34 @@
 package com.ordory.ordory;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ordory.ordory.R;
+import com.utils.Constant;
+import com.utils.MyRunnable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +43,15 @@ public class ConnectFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private Button connectButton;
+    private Fragment fragment = null;
+    private String params;
+    private EditText editEmail;
+    private EditText editPwd;
+    private String email;
+    private String password;
+    private TextView infoConnectText;
+    private Thread t1 = null;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,8 +92,48 @@ public class ConnectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_connect, container, false);
+
+        connectButton = (Button)view.findViewById(R.id.connect_button);
+
+        infoConnectText = (TextView)view.findViewById(R.id.errorConnect);
+        editEmail = (EditText) view.findViewById(R.id.email_connect);
+        editPwd = (EditText) view.findViewById(R.id.password_connect);
+        email = editEmail.getText().toString();
+        password = editPwd.getText().toString();
+        // on click event
+        connectButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // get values of email and password
+                       /* MyRunnable threadRunable = new MyRunnable("toto");
+                        t1 = new Thread(threadRunable);
+                        t1.start(); */
+                        MainActivity.myThread.start();
+                        try {
+                                t1.sleep(4000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        try {
+                                if(MainActivity.mainObject.getString("code").equals("0")){
+                                    infoConnectText.setText("Connexion etabli avec succes !");
+                                }else{
+                                    infoConnectText.setText("Erreur, veuillez remplir tous les champs");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                    }
+                }
+        );
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_connect, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
