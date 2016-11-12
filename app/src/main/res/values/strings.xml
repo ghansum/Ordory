@@ -26,4 +26,11 @@
     <!-- String View -->
     <!-- String for list shopping list view-->
     <string name="list_shoppinglist_title">Mes listes de course</string>
+
+
+
+    <!-- Menu String -->
+    <string name="menu_shoppinglist_search">Rechercher</string>
+    <string name="menu_shoppinglist_refresh">Actualiser</string>
+    <string name="menu_shoppinglist_add">Ajouter</string>
 </resources>
