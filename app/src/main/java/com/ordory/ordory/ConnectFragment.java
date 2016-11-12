@@ -121,6 +121,7 @@ public class ConnectFragment extends Fragment {
                         try {
                                 if(MainActivity.mainObject.getString("code").equals("0")){
                                     infoConnectText.setText("Connexion etabli avec succes !");
+                                    infoConnectText.setTextColor(getResources().getColor(R.color.colorGreen));
                                 }else{
                                     infoConnectText.setText("Erreur, veuillez remplir tous les champs");
                                 }
