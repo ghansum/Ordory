@@ -1,7 +1,9 @@
 package com.ordory.ordory;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -103,6 +105,18 @@ public class ListShoppingLishFragment extends Fragment {
 
             }
         });
+
+        buttonAddShoppingList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ListFormularFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+            }
+        });
+
+
+
         return view;
       // return inflater.inflate(R.layout.fragment_products, container, false);
     }
