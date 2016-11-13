@@ -1,5 +1,7 @@
 package com.utils;
 
+import org.json.JSONObject;
+
 /**
  * Created by Nourdine on 10/11/2016.
  */
