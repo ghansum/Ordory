@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity
                    BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener {
 
     private Button registerBtn;
-    Fragment fragment = null;
-    Button btnview = null;
+    private Fragment fragment = null;
+    private Button btnview = null;
     public static JSONObject resultJsonConnect;
     public static JSONObject mainObject;
 
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.clear();
         return true;
     }
 
@@ -158,56 +159,61 @@ public class MainActivity extends AppCompatActivity
     //String email = editEmail.getText().toString();
     //String password = editPwd.getText().toString();
     //String params = "?email="+email+"&password="+password;
-    public static Thread myThread = new Thread(new Runnable() {
-        public void run() {
-            String result=null;
+
+
+    static Thread myThread = new Thread(new Runnable() {
+
             InputStream in=null;
             URL url;
+            String result=null;
             HttpsURLConnection conn=null;
 
-            try{
-                // get URL content
-                String test = "https://appspaces.fr/esgi/shopping_list/account/login.php?email=toto@gmail.com&password=azerty";
-                url = new URL(test);
-                conn = (HttpsURLConnection) url.openConnection();
-                conn.setReadTimeout(5000);
-                conn.setConnectTimeout(5000);
-                conn.setUseCaches(false);
-                conn.setDoInput(true);
-                conn.setDoOutput(false);
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Content-length", "0");
-                conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-                conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-                in=conn.getInputStream();
-                // open the stream and put it into BufferedReader
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                String line;
-                StringBuilder builder = new StringBuilder();
-                while ((line=br.readLine())!= null) {
-                    builder.append(line);
-                }
-                result=builder.toString();
-                mainObject = new JSONObject(result);
-                resultJsonConnect = mainObject.getJSONObject("result");
-                System.out.println("Code : "+mainObject.getString("code"));
-                System.out.print("Result : "+result);
-                br.close();
-            }catch(MalformedURLException e) {
-                result=null;
-            } catch (IOException e) {
-                result=null;
-            } catch (Exception e) {
-                result=null;
-            }
+            @Override
+            public void run() {
+                try{
+                    // get URL content
 
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    url = new URL("https://appspaces.fr/esgi/shopping_list/account/login.php?email=toto@gmail.com&password=azerty");
+                    conn = (HttpsURLConnection) url.openConnection();
+                    conn.setReadTimeout(5000);
+                    conn.setConnectTimeout(5000);
+                    conn.setUseCaches(false);
+                    conn.setDoInput(true);
+                    conn.setDoOutput(false);
+                    conn.setRequestMethod("GET");
+                    conn.setRequestProperty("Content-length", "0");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+                    conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+                    in=conn.getInputStream();
+                    // open the stream and put it into BufferedReader
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                    String line;
+                    StringBuilder builder = new StringBuilder();
+                    while ((line=br.readLine())!= null) {
+                        builder.append(line);
+                    }
+                    result=builder.toString();
+                    mainObject = new JSONObject(result);
+                    resultJsonConnect = mainObject.getJSONObject("result");
+                    System.out.println("Code : "+mainObject.getString("code"));
+                    System.out.print("Result : "+result);
+                    br.close();
+                }catch(MalformedURLException e) {
+                    result=null;
+                } catch (IOException e) {
+                    result=null;
+                } catch (Exception e) {
+                    result=null;
+                }
+
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                conn.disconnect();
+
             }
-            conn.disconnect();
-            System.out.println(result);
-        }
-    });
+        });
+
 }
