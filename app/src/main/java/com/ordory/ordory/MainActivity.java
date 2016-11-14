@@ -33,7 +33,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
-                   BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener {
+                   BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
+                   ShopDetailsFragment.OnFragmentInteractionListener{
 
     private Button registerBtn;
     private Fragment fragment = null;
