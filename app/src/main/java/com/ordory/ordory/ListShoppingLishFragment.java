@@ -103,6 +103,14 @@ public class ListShoppingLishFragment extends Fragment {
                 String value = (String) productListView.getItemAtPosition(position);
                 Toast.makeText(arg0.getContext(), value, Toast.LENGTH_LONG).show();
 
+
+
+                 Fragment fragment = new ShopDetailsFragment();
+                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                 fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+
+
+
             }
         });
 
