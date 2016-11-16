@@ -1,39 +1,19 @@
 package com.ordory.ordory;
 
-import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.provider.Settings;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.ordory.ordory.R;
-import com.utils.Constant;
-import com.utils.MyRunnable;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,13 +29,13 @@ public class ConnectFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private Button connectButton;
-    private String params;
     private EditText editEmail;
     private EditText editPwd;
     private String email;
     private String password;
     private TextView infoConnectText;
     private Fragment frg = null;
+    private String response;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -105,37 +85,38 @@ public class ConnectFragment extends Fragment {
         infoConnectText = (TextView)view.findViewById(R.id.errorConnect);
         editEmail = (EditText) view.findViewById(R.id.email_connect);
         editPwd = (EditText) view.findViewById(R.id.password_connect);
-        email = editEmail.getText().toString();
-        password = editPwd.getText().toString();
-
         // on click event
 
         connectButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MainActivity.myThread.start();
-                        try {
-                            MainActivity.myThread.sleep(4000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        email = editEmail.getText().toString();
+                        password = editPwd.getText().toString();
+                        String url = "https://appspaces.fr/esgi/shopping_list/account/login.php?email="+email+"&password="+password;
+                        if(!email.isEmpty() && !password.isEmpty()){
+                            MainActivity.startRequestHttp(url,"GET");
+                            response = MainActivity.responseHttp;
+                            // Log.e("response",response);
+                            try {
+                                if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
+                                    infoConnectText.setTextColor(getResources().getColor(R.color.colorGreen));
+                                    //Add registration of user in the application
 
-                        try {
-                            if(MainActivity.mainObject.getString("code").equals("0")){
-                                infoConnectText.setTextColor(getResources().getColor(R.color.colorGreen));
-
-                                //Add registration of user in the application
-                                frg = new ListShoppingLishFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.connectFragment, frg);
-                                transaction.commit();
-                            }else{
-                                infoConnectText.setText("Erreur, veuillez remplir tous les champs");
+                                    frg = new ListShoppingLishFragment();
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.connectFragment, frg);
+                                    transaction.commit();
+                                }else{
+                                    infoConnectText.setText("Erreur, identifiant ou mot de passe incorrect ");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        }else{
+                            infoConnectText.setText("Erreur, veuillez remplir tous les champs ");
                         }
+
 
                     }
                 }
