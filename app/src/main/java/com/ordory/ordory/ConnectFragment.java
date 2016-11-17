@@ -40,6 +40,7 @@ public class ConnectFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public MainActivity main = new MainActivity();
 
     private OnFragmentInteractionListener mListener;
 
@@ -96,13 +97,11 @@ public class ConnectFragment extends Fragment {
                         String url = "https://appspaces.fr/esgi/shopping_list/account/login.php?email="+email+"&password="+password;
                         if(!email.isEmpty() && !password.isEmpty()){
                             MainActivity.startRequestHttp(url,"GET");
-                            response = MainActivity.responseHttp;
                             // Log.e("response",response);
                             try {
                                 if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
-                                    infoConnectText.setTextColor(getResources().getColor(R.color.colorGreen));
                                     //Add registration of user in the application
-
+                                    MainActivity.IS_CONNECTED = true;
                                     frg = new ListShoppingLishFragment();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.connectFragment, frg);

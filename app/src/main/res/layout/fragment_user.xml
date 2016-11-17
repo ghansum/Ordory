@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bracket_fragment"
+    android:id="@+id/userspace_fragment"
     android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:textSize="22dp"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Page Panier" />
+            android:text="@string/myspace_title" />
 
     </LinearLayout>
 

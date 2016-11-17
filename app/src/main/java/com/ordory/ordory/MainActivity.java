@@ -27,7 +27,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     public static JSONObject resultJsonConnect;
     public static JSONObject mainObject;
     public static String responseHttp;
+    public static Boolean IS_CONNECTED = false;
+    MenuItem item = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //myThread.start();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -61,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         /*
         TODO: connect the user and redirect him in another page ff
          */
-
         btnview =(Button)findViewById(R.id.redirectConnect);
         btnview.setOnClickListener(
             new View.OnClickListener() {
@@ -78,6 +82,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -90,10 +96,33 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        invalidateOptionsMenu();
         getMenuInflater().inflate(R.menu.main, menu);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(IS_CONNECTED){
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(1).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(true);
+            navigationView.getMenu().getItem(3).setVisible(true);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(3).setVisible(true); // because now the new size is 3
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(true);
+            navigationView.getMenu().getItem(1).setVisible(true);
+            navigationView.getMenu().getItem(2).setVisible(false);
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(true);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
+
         menu.clear();
         return true;
     }
@@ -126,20 +155,16 @@ public class MainActivity extends AppCompatActivity
             fragment = new ConnectFragment();
         } else if (id == R.id.nav_products) {
             fragment = new ListShoppingLishFragment();
-        } else if (id == R.id.nav_bracket) {
-            fragment = new BracketFragment();
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_addList) {
+            fragment = new ListFormularFragment();
         } else if (id == R.id.nav_logout) {
-
+            IS_CONNECTED = false;
+            setContentView(R.layout.activity_main);
         } else if (id == R.id.nav_subscribe) {
             fragment = new RegisterFragment();
         }else if (id == R.id.nav_home) {
             setContentView(R.layout.activity_main);
-        }else if(id == R.id.btn_create_shoplist){
-            fragment = new ListFormularFragment();
         }
-
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.homeFragment, fragment);
@@ -171,7 +196,7 @@ public class MainActivity extends AppCompatActivity
             InputStream in;
             URL url;
             String result=null;
-            HttpsURLConnection conn=null;
+            HttpURLConnection conn=null;
 
             @Override
             public void run() {
@@ -180,7 +205,7 @@ public class MainActivity extends AppCompatActivity
                         // get URL content
                         System.out.println("Entree 1....");
                         url = new URL(urlApi);
-                        conn = (HttpsURLConnection) url.openConnection();
+                        conn = (HttpURLConnection) url.openConnection();
                         System.out.println("Entree Try....");
                         conn.setReadTimeout(5000);
                         conn.setConnectTimeout(5000);
@@ -222,10 +247,30 @@ public class MainActivity extends AppCompatActivity
                     }
                     conn.disconnect();
                 }else{
-
+                    URL url = null;
+                    HttpURLConnection conn = null;
+                    try {
+                        url = new URL(urlApi);
+                        conn = (HttpURLConnection) url.openConnection();
+                        conn.setReadTimeout(10000 /* milliseconds */);
+                        conn.setConnectTimeout(15000 /* milliseconds */);
+                        conn.setRequestMethod("POST");
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); conn.setDoInput(true);
+                    String input = null; // Exemple : "{ \"music\": {\"title\": \"Drake\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
+                    OutputStream os = null;
+                    try {
+                        os = conn.getOutputStream();
+                        os.write(input.getBytes("UTF-8"));
+                        os.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-
             }
         };
         Thread mythread = new Thread(runnable);
