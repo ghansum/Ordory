@@ -1,6 +1,7 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -26,7 +27,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -36,11 +40,15 @@ public class MainActivity extends AppCompatActivity
                    BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
                    ShopDetailsFragment.OnFragmentInteractionListener{
 
+    private static final String USER_CONNECTED = null;
     private Button registerBtn;
     private Fragment fragment = null;
     private Button btnview = null;
     public static JSONObject resultJsonConnect;
     public static JSONObject mainObject;
+    public static String responseHttp;
+    public static Boolean IS_CONNECTED = false;
+    MenuItem item = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //myThread.start();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         /*
         TODO: connect the user and redirect him in another page ff
          */
-
         btnview =(Button)findViewById(R.id.redirectConnect);
         btnview.setOnClickListener(
             new View.OnClickListener() {
@@ -75,6 +82,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -87,10 +96,33 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        invalidateOptionsMenu();
         getMenuInflater().inflate(R.menu.main, menu);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(IS_CONNECTED){
+            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(1).setVisible(false);
+            navigationView.getMenu().getItem(2).setVisible(true);
+            navigationView.getMenu().getItem(3).setVisible(true);
+            navigationView.getMenu().getItem(4).setVisible(false);
+            navigationView.getMenu().getItem(3).setVisible(true); // because now the new size is 3
+        }else{
+            navigationView.getMenu().getItem(0).setVisible(true);
+            navigationView.getMenu().getItem(1).setVisible(true);
+            navigationView.getMenu().getItem(2).setVisible(false);
+            navigationView.getMenu().getItem(3).setVisible(false);
+            navigationView.getMenu().getItem(4).setVisible(true);
+            navigationView.getMenu().getItem(5).setVisible(false);
+        }
+
         menu.clear();
         return true;
     }
@@ -123,20 +155,16 @@ public class MainActivity extends AppCompatActivity
             fragment = new ConnectFragment();
         } else if (id == R.id.nav_products) {
             fragment = new ListShoppingLishFragment();
-        } else if (id == R.id.nav_bracket) {
-            fragment = new BracketFragment();
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_addList) {
+            fragment = new ListFormularFragment();
         } else if (id == R.id.nav_logout) {
-
+            IS_CONNECTED = false;
+            setContentView(R.layout.activity_main);
         } else if (id == R.id.nav_subscribe) {
             fragment = new RegisterFragment();
         }else if (id == R.id.nav_home) {
             setContentView(R.layout.activity_main);
-        }else if(id == R.id.btn_create_shoplist){
-            fragment = new ListFormularFragment();
         }
-
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.homeFragment, fragment);
@@ -161,60 +189,97 @@ public class MainActivity extends AppCompatActivity
     //String password = editPwd.getText().toString();
     //String params = "?email="+email+"&password="+password;
 
+    public static void startRequestHttp(final String urlApi, final String method)
+    {
 
-    static Thread myThread = new Thread(new Runnable() {
-
-            InputStream in=null;
+        Runnable runnable = new Runnable() {
+            InputStream in;
             URL url;
             String result=null;
-            HttpsURLConnection conn=null;
+            HttpURLConnection conn=null;
 
             @Override
             public void run() {
-                try{
-                    // get URL content
-
-                    url = new URL("https://appspaces.fr/esgi/shopping_list/account/login.php?email=toto@gmail.com&password=azerty");
-                    conn = (HttpsURLConnection) url.openConnection();
-                    conn.setReadTimeout(5000);
-                    conn.setConnectTimeout(5000);
-                    conn.setUseCaches(false);
-                    conn.setDoInput(true);
-                    conn.setDoOutput(false);
-                    conn.setRequestMethod("GET");
-                    conn.setRequestProperty("Content-length", "0");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-                    conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-                    in=conn.getInputStream();
-                    // open the stream and put it into BufferedReader
-                    BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                    String line;
-                    StringBuilder builder = new StringBuilder();
-                    while ((line=br.readLine())!= null) {
-                        builder.append(line);
+                if(method.equals("GET")){
+                    try{
+                        // get URL content
+                        System.out.println("Entree 1....");
+                        url = new URL(urlApi);
+                        conn = (HttpURLConnection) url.openConnection();
+                        System.out.println("Entree Try....");
+                        conn.setReadTimeout(5000);
+                        conn.setConnectTimeout(5000);
+                        conn.setUseCaches(false);
+                        conn.setDoInput(true);
+                        conn.setDoOutput(false);
+                        conn.setRequestMethod(method);
+                        conn.setRequestProperty("Content-length", "0");
+                        conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+                        conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+                        in=conn.getInputStream();
+                        System.out.println("Before while....");
+                        // open the stream and put it into BufferedReader
+                        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                        String line;
+                        StringBuilder builder = new StringBuilder();
+                        while ((line=br.readLine())!= null) {
+                            builder.append(line);
+                        }
+                        result=builder.toString();
+                        responseHttp = builder.toString();
+                        mainObject = new JSONObject(result);
+                        resultJsonConnect = mainObject.getJSONObject("result");
+                        System.out.println("Code : "+mainObject.getString("code"));
+                        System.out.print("Result : "+result);
+                        br.close();
+                    }catch(MalformedURLException e) {
+                        result=null;
+                    } catch (IOException e) {
+                        result=null;
+                    } catch (Exception e) {
+                        result=null;
                     }
-                    result=builder.toString();
-                    mainObject = new JSONObject(result);
-                    resultJsonConnect = mainObject.getJSONObject("result");
-                    System.out.println("Code : "+mainObject.getString("code"));
-                    System.out.print("Result : "+result);
-                    br.close();
-                }catch(MalformedURLException e) {
-                    result=null;
-                } catch (IOException e) {
-                    result=null;
-                } catch (Exception e) {
-                    result=null;
-                }
 
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    try {
+                        conn.getInputStream().close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    conn.disconnect();
+                }else{
+                    URL url = null;
+                    HttpURLConnection conn = null;
+                    try {
+                        url = new URL(urlApi);
+                        conn = (HttpURLConnection) url.openConnection();
+                        conn.setReadTimeout(10000 /* milliseconds */);
+                        conn.setConnectTimeout(15000 /* milliseconds */);
+                        conn.setRequestMethod("POST");
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); conn.setDoInput(true);
+                    String input = null; // Exemple : "{ \"music\": {\"title\": \"Drake\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
+                    OutputStream os = null;
+                    try {
+                        os = conn.getOutputStream();
+                        os.write(input.getBytes("UTF-8"));
+                        os.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-                conn.disconnect();
-
             }
-        });
+        };
+        Thread mythread = new Thread(runnable);
+        mythread.start();
+    }
+
+    /*static Thread myThread = new Thread(new Runnable() {
+
+
+        }); */
 
 }

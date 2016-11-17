@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/menu_group">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_home"
-            android:title="Home" />
+            android:title="@string/action_home" />
         <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_menu_login"
-            android:title="Connexion" />
+            android:title="@string/action_login" />
         <item
             android:id="@+id/nav_products"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Liste produits" />
+            android:title="@string/action_list" />
         <item
-            android:id="@+id/nav_bracket"
+            android:id="@+id/nav_addList"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Panier" />
+            android:title="@string/action_addList" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_subscribe"
+            android:icon="@drawable/ic_menu_login"
+            android:title="@string/action_register" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_subscribe"
-                android:icon="@drawable/ic_menu_login"
-                android:title="Inscription" />
-            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_logout"
-                android:title="Déconnexion" />
+                android:title="@string/action_logout" />
         </menu>
     </item>
 

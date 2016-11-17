@@ -5,9 +5,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_home">Home</string>
+    <string name="action_login">Connexion</string>
+    <string name="action_list">Mes listes produits</string>
+    <string name="action_addList">Ajouter une liste</string>
+    <string name="action_register">Inscription</string>
+    <string name="action_logout">Déconnexion</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="myspace_title">Mon compte</string>
 
     <!-- Values to connect to the API-->
     <string name="ws_urlConnect">http://appspaces.fr/esgi/shopping_list/account/login.php</string>

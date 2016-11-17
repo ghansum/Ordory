@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Created by Nourdine on 10/11/2016.
  */
 public class Constant {
-    public static final String WS_CONNECT_URL = "https://appspaces.fr/esgi/shopping_list/account/login.php";
+    public static final String WS_CONNECT_URL = "http://appspaces.fr/esgi/shopping_list/account/login.php";
     public static final String WS_SUBSCRIBE_URL = "http://appspaces.fr/esgi/shopping_list/account/subscribe.php";
     public static final String WS_CREATE_PRODUCT_URL = "http://appspaces.fr/esgi/shopping_list/product/create.php";
     public static final String WS_EDIT_PRODUCT_URL = "http://appspaces.fr/esgi/shopping_list/product/edit.php";
