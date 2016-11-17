@@ -7,6 +7,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.adapter.ProductAdapter;
+import com.holder.ProductViewHolder;
+import com.models.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +38,9 @@ public class ShopDetailsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ListView listProductsView;
+    private Button addProductButton;
 
     public ShopDetailsFragment() {
         // Required empty public constructor
@@ -63,7 +77,21 @@ public class ShopDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shop_details, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_shop_details, container, false);
+
+        listProductsView = (ListView) view.findViewById(R.id.product_list_view);
+        addProductButton = (Button) view.findViewById(R.id.button_add_product);
+
+        List<Product> products = new ArrayList<Product>();
+        products.add(new Product(0, "Peche", 5, 1));
+        products.add(new Product(0, "Pomme", 2, 2));
+        products.add(new Product(0, "Poire", 1, 5));
+
+        ProductAdapter productAdapter = new ProductAdapter(this.getActivity(), products);
+
+        listProductsView.setAdapter(productAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

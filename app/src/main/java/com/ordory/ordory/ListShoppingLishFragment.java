@@ -1,9 +1,7 @@
 package com.ordory.ordory;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,6 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.adapter.ShoppingListAdapter;
+import com.models.ShoppingList;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +43,7 @@ public class ListShoppingLishFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private ListView productListView;
+    private ListView listShoppingListView;
 
     private Button buttonAddShoppingList;
 
@@ -85,25 +90,22 @@ public class ListShoppingLishFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
-        View view = inflater.inflate(R.layout.fragment_products, container, false);
-        productListView = (ListView) view.findViewById(R.id.product_list_view);
+        View view = inflater.inflate(R.layout.fragment_list_shopping_list, container, false);
+        listShoppingListView = (ListView) view.findViewById(R.id.product_list_view);
         buttonAddShoppingList = (Button) view.findViewById(R.id.button_add_shopping_list);
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1);
-        listAdapter.add("Yala");
-        listAdapter.add("Yola");
-        listAdapter.add("Baba");
+        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+        shoppingLists.add(new ShoppingList(0, "Course du weekend", new Date(), false));
+        shoppingLists.add(new ShoppingList(1, "Course de Noel", new Date(), false));
+        shoppingLists.add(new ShoppingList(2, "Course du nouvel an", new Date(), false));
 
-        productListView.setAdapter(listAdapter);
+        ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(this.getActivity(), shoppingLists);
 
-        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listShoppingListView.setAdapter(shoppingListAdapter);
+
+        listShoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
-                ArrayAdapter<String> newAdapter = (ArrayAdapter) arg0.getAdapter();
-                String value = (String) productListView.getItemAtPosition(position);
-                Toast.makeText(arg0.getContext(), value, Toast.LENGTH_LONG).show();
-
-
 
                  Fragment fragment = new ShopDetailsFragment();
                  FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -126,7 +128,7 @@ public class ListShoppingLishFragment extends Fragment {
 
 
         return view;
-      // return inflater.inflate(R.layout.fragment_products, container, false);
+      // return inflater.inflate(R.layout.fragment_list_shopping_list, container, false);
     }
 
 

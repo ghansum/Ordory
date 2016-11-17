@@ -27,6 +27,7 @@
             android:layout_width="49dp"
             android:layout_height="49dp"
             android:textAlignment="center"
+            android:background="@drawable/roundedbouton"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="30dp"
             android:text="+"
