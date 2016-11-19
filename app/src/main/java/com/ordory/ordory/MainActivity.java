@@ -1,7 +1,6 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -11,15 +10,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-
-import com.utils.Constant;
-import com.utils.MyRunnable;
 
 import org.json.JSONObject;
 
@@ -30,15 +24,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
-                   BracketFragment.OnFragmentInteractionListener, ListShoppingLishFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
-                   ShopDetailsFragment.OnFragmentInteractionListener{
+                   BracketFragment.OnFragmentInteractionListener, ListShoppingListFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
+                   ShopDetailsFragment.OnFragmentInteractionListener, ProductFormFragment.OnFragmentInteractionListener{
 
     private static final String USER_CONNECTED = null;
     private Button registerBtn;
@@ -154,7 +145,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the login action
             fragment = new ConnectFragment();
         } else if (id == R.id.nav_products) {
-            fragment = new ListShoppingLishFragment();
+            fragment = new ListShoppingListFragment();
         } else if (id == R.id.nav_addList) {
             fragment = new ListFormularFragment();
         } else if (id == R.id.nav_logout) {

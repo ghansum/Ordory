@@ -42,7 +42,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
         Product product = getItem(position);
 
-        viewHolder.name.setText(product.getName());
+        viewHolder.name.setText(product.getQuantity()+"x "+product.getName());
         viewHolder.price.setText("Prix unitaire : "+product.getPrice()+" €");
 
         return convertView;

@@ -1,5 +1,6 @@
 package com.ordory.ordory;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.app.Fragment;
@@ -91,6 +92,16 @@ public class ShopDetailsFragment extends Fragment {
         ProductAdapter productAdapter = new ProductAdapter(this.getActivity(), products);
 
         listProductsView.setAdapter(productAdapter);
+
+        addProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ProductFormFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.fragment_shoppingList, fragment).addToBackStack(null).commit();
+            }
+        });
+
         return view;
     }
 

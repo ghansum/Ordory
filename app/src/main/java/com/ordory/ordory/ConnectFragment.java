@@ -3,10 +3,8 @@ package com.ordory.ordory;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +100,7 @@ public class ConnectFragment extends Fragment {
                                 if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
                                     //Add registration of user in the application
                                     MainActivity.IS_CONNECTED = true;
-                                    frg = new ListShoppingLishFragment();
+                                    frg = new ListShoppingListFragment();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.connectFragment, frg);
                                     transaction.commit();

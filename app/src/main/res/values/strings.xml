@@ -40,4 +40,10 @@
     <string name="menu_shoppinglist_add">Ajouter</string>
     <string name="list_shoppinglist_detail_title">Produits de ma liste</string>
     <string name="add_shppinglist_title">Ajout nouvelle liste</string>
+
+    <!-- Product form value -->
+    <string name="add_product">Ajout d\'un produit</string>
+    <string name="product_name">Nom du produit</string>
+    <string name="product_price">Prix du produit</string>
+    <string name="product_quantity">Quantité</string>
 </resources>

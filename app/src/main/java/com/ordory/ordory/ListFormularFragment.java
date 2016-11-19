@@ -1,12 +1,18 @@
 package com.ordory.ordory;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +33,13 @@ public class ListFormularFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private EditText shoppingListNameEdit;
+    private String shoppingListName;
+
+    private Button confirmButton;
+
+    private TextView shoppingListFormErr;
 
     public ListFormularFragment() {
         // Required empty public constructor
@@ -63,7 +76,43 @@ public class ListFormularFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_formular, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_formular, container, false);
+
+        shoppingListNameEdit = (EditText) view.findViewById(R.id.listName);
+
+        confirmButton = (Button) view.findViewById(R.id.btn_create_shoplist);
+
+        shoppingListFormErr = (TextView) view.findViewById(R.id.shoppingListFormErr);
+
+        confirmButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                shoppingListName = shoppingListNameEdit.getText().toString();
+                String url = "https://appspaces.fr/esgi/shopping_list/shopping_list/create.php?token="+""+"&name="+shoppingListName;
+                if(!shoppingListName.isEmpty()){
+                    MainActivity.startRequestHttp(url, "GET");
+                    try{
+                        if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
+                            //Add registration of user in the application
+                            MainActivity.IS_CONNECTED = true;
+                            Fragment frg = new ListShoppingListFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_form_shopping_list, frg);
+                            transaction.commit();
+                        }else{
+                            shoppingListFormErr.setText("Erreur de saisie");
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    shoppingListFormErr.setText("Veuillez remplir les champs du formulaire");
+                }
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
