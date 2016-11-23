@@ -1,6 +1,7 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -10,12 +11,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.models.User;
+
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,15 +40,15 @@ public class MainActivity extends AppCompatActivity
                    BracketFragment.OnFragmentInteractionListener, ListShoppingListFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
                    ShopDetailsFragment.OnFragmentInteractionListener, ProductFormFragment.OnFragmentInteractionListener{
 
-    private static final String USER_CONNECTED = null;
-    private Button registerBtn;
     private Fragment fragment = null;
     private Button btnview = null;
     public static JSONObject resultJsonConnect;
     public static JSONObject mainObject;
     public static String responseHttp;
     public static Boolean IS_CONNECTED = false;
-    MenuItem item = null;
+    public static User userConnected;
+    public static String tokenUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +80,15 @@ public class MainActivity extends AppCompatActivity
             }
         );
 
+        if(IS_CONNECTED){
+            SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+            String value = sharedPreferences.getString("lastname", null);
+            TextView txt = (TextView)findViewById(R.id.titleApp);
+            txt.setText(value);
+        }
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
     }
 
@@ -87,7 +102,23 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void saveInfoUser() throws JSONException {
+        if(IS_CONNECTED){
+            userConnected = new User(resultJsonConnect.getString("firstname"),resultJsonConnect.getString("lastname"),resultJsonConnect.getString("email"),resultJsonConnect.getString("token"));
+            tokenUser = resultJsonConnect.getString("token");
+            /*SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
 
+            editor.putString("email", resultJsonConnect.getString("email"));
+            editor.putString("firstname", resultJsonConnect.getString("firstname"));
+            editor.putString("lastname", resultJsonConnect.getString("lastname"));
+            editor.putString("token", resultJsonConnect.getString("token"));
+            editor.commit();
+            */
+            //Toast.makeText(MainActivity.this, "Inscription réussi avec succès !", Toast.LENGTH_SHORT).show();
+
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,15 +203,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    //this.editEmail = (EditText) findViewById(R.id.email_connect);
-    //editPwd = (EditText) findViewById(R.id.password_connect);
 
-    // get values of email and password
-    //String email = editEmail.getText().toString();
-    //String password = editPwd.getText().toString();
     //String params = "?email="+email+"&password="+password;
 
-    public static void startRequestHttp(final String urlApi, final String method)
+    public static void startRequestHttp(final String urlApi, final String method, final String data)
     {
 
         Runnable runnable = new Runnable() {
@@ -252,15 +278,21 @@ public class MainActivity extends AppCompatActivity
                         e.printStackTrace();
                     }
                     conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); conn.setDoInput(true);
-                    String input = null; // Exemple : "{ \"music\": {\"title\": \"Drake\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
+                    String input = data; //  "{ \"music\": {\"title\": \"Drake\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
                     OutputStream os = null;
                     try {
                         os = conn.getOutputStream();
                         os.write(input.getBytes("UTF-8"));
                         os.flush();
+
+                        // Starts the query
+                        conn.connect();
+                        int response = conn.getResponseCode();
+                        Log.e("POST",""+data);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
         };

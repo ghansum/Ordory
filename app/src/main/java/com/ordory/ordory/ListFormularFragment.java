@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.utils.Constant;
+
 import org.w3c.dom.Text;
 
 /**
@@ -89,19 +91,18 @@ public class ListFormularFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shoppingListName = shoppingListNameEdit.getText().toString();
-                String url = "https://appspaces.fr/esgi/shopping_list/shopping_list/create.php?token="+""+"&name="+shoppingListName;
+                String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+MainActivity.tokenUser+"&name="+shoppingListName;
                 if(!shoppingListName.isEmpty()){
-                    MainActivity.startRequestHttp(url, "GET");
+                    MainActivity.startRequestHttp(url, "GET","");
                     try{
                         if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
                             //Add registration of user in the application
-                            MainActivity.IS_CONNECTED = true;
                             Fragment frg = new ListShoppingListFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_form_shopping_list, frg);
                             transaction.commit();
                         }else{
-                            shoppingListFormErr.setText("Erreur de saisie");
+                            shoppingListFormErr.setText("Erreur lors de la creation de la liste");
                         }
                     } catch (Exception e){
                         e.printStackTrace();

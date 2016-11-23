@@ -3,6 +3,7 @@ package com.ordory.ordory;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.utils.Constant;
+
 import org.json.JSONException;
 
 /**
@@ -92,14 +96,16 @@ public class ConnectFragment extends Fragment {
                     public void onClick(View view) {
                         email = editEmail.getText().toString();
                         password = editPwd.getText().toString();
-                        String url = "https://appspaces.fr/esgi/shopping_list/account/login.php?email="+email+"&password="+password;
+                        String url = Constant.WS_CONNECT_URL+"?email="+email+"&password="+password;
                         if(!email.isEmpty() && !password.isEmpty()){
-                            MainActivity.startRequestHttp(url,"GET");
+                            MainActivity.startRequestHttp(url,"GET","");
                             // Log.e("response",response);
                             try {
                                 if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
                                     //Add registration of user in the application
                                     MainActivity.IS_CONNECTED = true;
+                                    MainActivity.tokenUser = MainActivity.resultJsonConnect.getString("token");
+                                    //main.saveInfoUser();
                                     frg = new ListShoppingListFragment();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.connectFragment, frg);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,14 @@ import android.widget.ListView;
 
 import com.adapter.ShoppingListAdapter;
 import com.models.ShoppingList;
+import com.utils.Constant;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,19 +91,48 @@ public class ListShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        String url;
+        String listName, dateList, name;
+        ShoppingList shopingList;
+        JSONObject tmpObj;
+        int id;
+        Date date;
+        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+        if(MainActivity.IS_CONNECTED){
+            url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+MainActivity.tokenUser;
+            MainActivity.startRequestHttp(url, "GET","");
+            try {
+                if (MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")) {
+                    //Add registration of user in the application
+                    //listName = MainActivity.resultJsonConnect.getString("name");
+                    //dateList = MainActivity.resultJsonConnect.getString("created_date");
+                    JSONArray listArray = MainActivity.mainObject.getJSONArray("result");
+                    for (int i = 0; i < listArray.length(); i++) {
+                        tmpObj = listArray.getJSONObject(i);
+                        id = Integer.parseInt(tmpObj.getString("id"));
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        date = simpleDateFormat.parse(tmpObj.getString("created_date"));
+                        name = tmpObj.getString("name");
 
-        // Inflate the layout for this fragment
-
+                        shopingList = new ShoppingList(id,name,date,false);
+                        shoppingLists.add(shopingList);
+                        Log.e("name", tmpObj.getString("name"));
+                    }
+                    Log.e("listShop","successful...");
+                    System.out.println("List shop : "+MainActivity.mainObject.getString("result"));
+                } else {
+                    Log.e("listShop","Error...");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
         View view = inflater.inflate(R.layout.fragment_list_shopping_list, container, false);
         listShoppingListView = (ListView) view.findViewById(R.id.product_list_view);
         buttonAddShoppingList = (Button) view.findViewById(R.id.button_add_shopping_list);
-
-
-        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-        shoppingLists.add(new ShoppingList(0, "Course du weekend", new Date(), false));
-        shoppingLists.add(new ShoppingList(1, "Course de Noel", new Date(), false));
-        shoppingLists.add(new ShoppingList(2, "Course du nouvel an", new Date(), false));
 
         ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(this.getActivity(), shoppingLists);
 

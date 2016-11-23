@@ -1,13 +1,21 @@
 package com.ordory.ordory;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.utils.Constant;
+
+import org.json.JSONException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +30,17 @@ public class RegisterFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static String email;
+    public static String password;
+    public static String firstname;
+    public static String lastname;
+
+    private EditText editEmail;
+    private EditText editPwd;
+    private EditText editfirstName;
+    private EditText editlastName;
+    public Button registerButton;
+    private Fragment frg = null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -65,8 +84,46 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-        //TextView output= (TextView)view.findViewById(R.id.msg2);
-        //output.setText("Fragment numero 2");
+
+        editEmail = (EditText) view.findViewById(R.id.email);
+        editPwd = (EditText) view.findViewById(R.id.password);
+        editfirstName = (EditText) view.findViewById(R.id.firstName);
+        editlastName = (EditText) view.findViewById(R.id.lastName);
+
+        registerButton = (Button)view.findViewById(R.id.subscribe_button);
+        registerButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        email = editEmail.getText().toString();
+                        password = editPwd.getText().toString();
+                        lastname = editlastName.getText().toString();
+                        firstname = editfirstName.getText().toString();
+
+                        String url = Constant.WS_SUBSCRIBE_URL+"?email="+email+"&password="+password+"&firstname="+firstname+"&lastname="+lastname;
+                       // String data = "{\"email\": \""+email+"\",\"password\": \""+password+"\",\"firstname\": \""+firstname+"\",\"lastname\": \""+lastname+"\" }";
+                        if(!email.isEmpty() && !password.isEmpty() && !lastname.isEmpty() && !firstname.isEmpty()) {
+                            MainActivity.startRequestHttp(url, "GET","");
+                            // Log.e("response",response);
+                            try {
+                                if (MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")) {
+                                    //Add registration of user in the application
+                                    Log.e("subscribe","successful...");
+                                    frg = new ConnectFragment();
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.registerFragment, frg);
+                                    transaction.commit();
+                                } else {
+                                    Log.e("subscribe","Error...");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+        );
+
        // return inflater.inflate(R.layout.fragment_register, container, false);
         return view;
     }

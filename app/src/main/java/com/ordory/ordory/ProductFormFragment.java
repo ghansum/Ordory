@@ -1,12 +1,18 @@
 package com.ordory.ordory;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.utils.Constant;
 
 
 /**
@@ -22,10 +28,18 @@ public class ProductFormFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button btnCreateProduct;
+    private EditText productName_edit;
+    private EditText price_edit;
+    private EditText quantity_edit;
+    private TextView blocInfo;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String productName;
+    private String quantity;
+    private String price;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,7 +80,46 @@ public class ProductFormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_form, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_form, container, false);
+
+        productName_edit = (EditText) view.findViewById(R.id.productName);
+        price_edit = (EditText) view.findViewById(R.id.price);
+        quantity_edit = (EditText) view.findViewById(R.id.quantity);
+
+        productName = productName_edit.getText().toString();
+        price = price_edit.getText().toString();
+        quantity = quantity_edit.getText().toString();
+
+        blocInfo = (TextView) view.findViewById(R.id.shoppingListFormErr);
+
+        btnCreateProduct = (Button)view.findViewById(R.id.btn_create_shoplist);
+        btnCreateProduct.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                String url = null; //Constant.WS_CREATE_PRODUCT_URL+"?token="+MainActivity.tokenUser+"&name="+token;
+                if(!productName.isEmpty() && !price.isEmpty() && !quantity.isEmpty()){
+                    MainActivity.startRequestHttp(url, "GET","");
+                    try{
+                        if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
+                            //Add registration of user in the application
+                            Fragment frg = new ListShoppingListFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_form_shopping_list, frg);
+                            transaction.commit();
+                        }else{
+                            blocInfo.setText("Erreur lors de la creation du produit");
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    blocInfo.setText("Erreur, Veuillez remplir les champs du formulaire");
+                }
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

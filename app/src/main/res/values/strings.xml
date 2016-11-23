@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_home">Home</string>
     <string name="action_login">Connexion</string>
-    <string name="action_list">Mes listes produits</string>
+    <string name="action_list">Mes listes de shopping</string>
     <string name="action_addList">Ajouter une liste</string>
     <string name="action_register">Inscription</string>
     <string name="action_logout">Déconnexion</string>
