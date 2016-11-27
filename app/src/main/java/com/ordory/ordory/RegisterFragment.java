@@ -106,7 +106,7 @@ public class RegisterFragment extends Fragment {
                             MainActivity.startRequestHttp(url, "GET","");
                             // Log.e("response",response);
                             try {
-                                if (MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")) {
+                                if (Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")) {
                                     //Add registration of user in the application
                                     Log.e("subscribe","successful...");
                                     frg = new ConnectFragment();

@@ -16,6 +16,11 @@ import android.widget.TextView;
 import com.adapter.ProductAdapter;
 import com.holder.ProductViewHolder;
 import com.models.Product;
+import com.utils.Constant;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,16 +83,38 @@ public class ShopDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_shop_details, container, false);
 
         listProductsView = (ListView) view.findViewById(R.id.product_list_view);
         addProductButton = (Button) view.findViewById(R.id.button_add_product);
-
+        TextView title = (TextView)view.findViewById(R.id.titleListProduct);
+        title.setText(Constant.listSelected);
+        String url = null;
+        String name;
+        JSONObject tmpObj;
+        int id, qty;
+        double price;
         List<Product> products = new ArrayList<Product>();
-        products.add(new Product(0, "Peche", 5, 1));
-        products.add(new Product(0, "Pomme", 2, 2));
-        products.add(new Product(0, "Poire", 1, 5));
+        if(Constant.IS_CONNECTED){
+            url = Constant.WS_LIST_PRODUCT_URL+"?token="+Constant.tokenUser+"&shopping_list_id="+Constant.idList;
+            MainActivity.startRequestHttp(url,"GET","");
+
+            try {
+                JSONArray lisProducts = Constant.mainObject.getJSONArray("result");
+                System.out.println("Data Product : "+ lisProducts);
+                for (int i = 0; i < lisProducts.length(); i++) {
+                    tmpObj = lisProducts.getJSONObject(i);
+                    id = Integer.parseInt(tmpObj.getString("id"));
+                    price = Double.parseDouble(tmpObj.getString("price"));
+                    qty = Integer.parseInt(tmpObj.getString("quantity"));
+                    name = tmpObj.getString("name");
+                    products.add(new Product(id, name, qty, price));
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         ProductAdapter productAdapter = new ProductAdapter(this.getActivity(), products);
 

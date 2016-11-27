@@ -98,15 +98,12 @@ public class ListShoppingListFragment extends Fragment {
         int id;
         Date date;
         List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-        if(MainActivity.IS_CONNECTED){
-            url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+MainActivity.tokenUser;
+        if(Constant.IS_CONNECTED){
+            url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+Constant.tokenUser;
             MainActivity.startRequestHttp(url, "GET","");
             try {
-                if (MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")) {
-                    //Add registration of user in the application
-                    //listName = MainActivity.resultJsonConnect.getString("name");
-                    //dateList = MainActivity.resultJsonConnect.getString("created_date");
-                    JSONArray listArray = MainActivity.mainObject.getJSONArray("result");
+                if (Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")) {
+                    JSONArray listArray = Constant.mainObject.getJSONArray("result");
                     for (int i = 0; i < listArray.length(); i++) {
                         tmpObj = listArray.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
@@ -119,7 +116,7 @@ public class ListShoppingListFragment extends Fragment {
                         Log.e("name", tmpObj.getString("name"));
                     }
                     Log.e("listShop","successful...");
-                    System.out.println("List shop : "+MainActivity.mainObject.getString("result"));
+                    System.out.println("List shop : "+Constant.mainObject.getString("result"));
                 } else {
                     Log.e("listShop","Error...");
                 }
@@ -141,10 +138,13 @@ public class ListShoppingListFragment extends Fragment {
         listShoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
-
-                 Fragment fragment = new ShopDetailsFragment();
-                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                 fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+                ShoppingList itemselected = (ShoppingList) listShoppingListView.getItemAtPosition(position);
+                Constant.idList = itemselected.getId();
+                Constant.listSelected = itemselected.getName();
+                System.out.println("Item id : "+ Constant.idList);
+                Fragment fragment = new ShopDetailsFragment();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
 
             }
         });

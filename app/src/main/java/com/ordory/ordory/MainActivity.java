@@ -1,7 +1,9 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,10 +19,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.models.User;
+import com.utils.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,13 +47,6 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment fragment = null;
     private Button btnview = null;
-    public static JSONObject resultJsonConnect;
-    public static JSONObject mainObject;
-    public static String responseHttp;
-    public static Boolean IS_CONNECTED = false;
-    public static User userConnected;
-    public static String tokenUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +77,9 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         );
+        Constant.sharedPref = this.getSharedPreferences("mySharedPref",0);
 
-        if(IS_CONNECTED){
-            SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-            String value = sharedPreferences.getString("lastname", null);
-            TextView txt = (TextView)findViewById(R.id.titleApp);
-            txt.setText(value);
-        }
+        //Toast.makeText(MainActivity.this, "Inscription réussi avec succès !", Toast.LENGTH_SHORT).show();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -103,21 +97,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void saveInfoUser() throws JSONException {
-        if(IS_CONNECTED){
-            userConnected = new User(resultJsonConnect.getString("firstname"),resultJsonConnect.getString("lastname"),resultJsonConnect.getString("email"),resultJsonConnect.getString("token"));
-            tokenUser = resultJsonConnect.getString("token");
-            /*SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
 
-            editor.putString("email", resultJsonConnect.getString("email"));
-            editor.putString("firstname", resultJsonConnect.getString("firstname"));
-            editor.putString("lastname", resultJsonConnect.getString("lastname"));
-            editor.putString("token", resultJsonConnect.getString("token"));
-            editor.commit();
-            */
-            //Toast.makeText(MainActivity.this, "Inscription réussi avec succès !", Toast.LENGTH_SHORT).show();
-
-        }
     }
 
     @Override
@@ -129,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(IS_CONNECTED){
+        if(Constant.IS_CONNECTED){
             navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(2).setVisible(true);
@@ -180,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_addList) {
             fragment = new ListFormularFragment();
         } else if (id == R.id.nav_logout) {
-            IS_CONNECTED = false;
+            Constant.IS_CONNECTED = false;
             setContentView(R.layout.activity_main);
         } else if (id == R.id.nav_subscribe) {
             fragment = new RegisterFragment();
@@ -243,10 +223,10 @@ public class MainActivity extends AppCompatActivity
                             builder.append(line);
                         }
                         result=builder.toString();
-                        responseHttp = builder.toString();
-                        mainObject = new JSONObject(result);
-                        resultJsonConnect = mainObject.getJSONObject("result");
-                        System.out.println("Code : "+mainObject.getString("code"));
+                        Constant.responseHttp = builder.toString();
+                        Constant.mainObject = new JSONObject(result);
+                        Constant.resultJsonConnect = Constant.mainObject.getJSONObject("result");
+                        System.out.println("Code : "+Constant.mainObject.getString("code"));
                         System.out.print("Result : "+result);
                         br.close();
                     }catch(MalformedURLException e) {
@@ -300,9 +280,24 @@ public class MainActivity extends AppCompatActivity
         mythread.start();
     }
 
-    /*static Thread myThread = new Thread(new Runnable() {
+   static Thread threadConnect = new Thread(new Runnable() {
+        public void run() {
+            Log.e("userConn1","hoho");
+            try {
+                Constant.userConnected = new User(Constant.resultJsonConnect.getString("firstname"),Constant.resultJsonConnect.getString("lastname"),Constant.resultJsonConnect.getString("email"),Constant.resultJsonConnect.getString("token"));
+                Constant.tokenUser = Constant.resultJsonConnect.getString("token");
+                SharedPreferences.Editor editor = Constant.sharedPref.edit();
+                editor.clear();
+                editor.putString("email", Constant.resultJsonConnect.getString("email"));
+                editor.putString("firstname", Constant.resultJsonConnect.getString("firstname"));
+                editor.putString("lastname", Constant.resultJsonConnect.getString("lastname"));
+                editor.putString("token", Constant.resultJsonConnect.getString("token"));
+                editor.commit();
+                Log.e("userConnectMain",Constant.tokenUser);
 
-
-        }); */
-
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    });
 }

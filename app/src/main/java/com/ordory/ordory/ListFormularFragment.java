@@ -91,11 +91,11 @@ public class ListFormularFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shoppingListName = shoppingListNameEdit.getText().toString();
-                String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+MainActivity.tokenUser+"&name="+shoppingListName;
+                String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+Constant.tokenUser+"&name="+shoppingListName;
                 if(!shoppingListName.isEmpty()){
                     MainActivity.startRequestHttp(url, "GET","");
                     try{
-                        if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
+                        if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
                             //Add registration of user in the application
                             Fragment frg = new ListShoppingListFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();

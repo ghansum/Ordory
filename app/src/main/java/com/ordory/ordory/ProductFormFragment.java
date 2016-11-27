@@ -3,14 +3,17 @@ package com.ordory.ordory;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.utils.Constant;
 
@@ -33,6 +36,8 @@ public class ProductFormFragment extends Fragment {
     private EditText price_edit;
     private EditText quantity_edit;
     private TextView blocInfo;
+    private String tokenShared;
+    SharedPreferences sharedPreferences;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -85,23 +90,24 @@ public class ProductFormFragment extends Fragment {
         productName_edit = (EditText) view.findViewById(R.id.productName);
         price_edit = (EditText) view.findViewById(R.id.price);
         quantity_edit = (EditText) view.findViewById(R.id.quantity);
-
-        productName = productName_edit.getText().toString();
-        price = price_edit.getText().toString();
-        quantity = quantity_edit.getText().toString();
-
-        blocInfo = (TextView) view.findViewById(R.id.shoppingListFormErr);
+        sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        tokenShared = sharedPreferences.getString("token", null);
+        blocInfo = (TextView) view.findViewById(R.id.createProductInfo);
 
         btnCreateProduct = (Button)view.findViewById(R.id.btn_create_shoplist);
         btnCreateProduct.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                String url = null; //Constant.WS_CREATE_PRODUCT_URL+"?token="+MainActivity.tokenUser+"&name="+token;
+                productName = productName_edit.getText().toString();
+                price = price_edit.getText().toString();
+                quantity = quantity_edit.getText().toString();
+                String url = Constant.WS_CREATE_PRODUCT_URL+"?token="+tokenShared+"&shopping_list_id="+Constant.idList+"&name="+productName+"&quantity="+quantity+"&price="+price;
                 if(!productName.isEmpty() && !price.isEmpty() && !quantity.isEmpty()){
                     MainActivity.startRequestHttp(url, "GET","");
                     try{
-                        if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
+                        if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
+                            System.out.println("Resultat Create Product : "+Constant.mainObject.getJSONArray("result"));
                             //Add registration of user in the application
                             Fragment frg = new ListShoppingListFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();

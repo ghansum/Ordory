@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +38,11 @@ public class ConnectFragment extends Fragment {
     private String password;
     private TextView infoConnectText;
     private Fragment frg = null;
-    private String response;
+    SharedPreferences sharedPreferences;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public MainActivity main = new MainActivity();
-
     private OnFragmentInteractionListener mListener;
 
     public ConnectFragment() {
@@ -79,7 +78,7 @@ public class ConnectFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_connect, container, false);
 
@@ -101,15 +100,16 @@ public class ConnectFragment extends Fragment {
                             MainActivity.startRequestHttp(url,"GET","");
                             // Log.e("response",response);
                             try {
-                                if(MainActivity.mainObject != null && MainActivity.mainObject.getString("code").equals("0")){
+                                if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
                                     //Add registration of user in the application
-                                    MainActivity.IS_CONNECTED = true;
-                                    MainActivity.tokenUser = MainActivity.resultJsonConnect.getString("token");
-                                    //main.saveInfoUser();
+                                    Constant.IS_CONNECTED = true;
+                                    MainActivity.threadConnect.start();
+                                    Constant.tokenUser = Constant.resultJsonConnect.getString("token");
                                     frg = new ListShoppingListFragment();
                                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                     transaction.replace(R.id.connectFragment, frg);
                                     transaction.commit();
+
                                 }else{
                                     infoConnectText.setText("Erreur, identifiant ou mot de passe incorrect ");
                                 }
