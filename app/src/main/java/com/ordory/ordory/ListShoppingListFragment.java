@@ -105,7 +105,7 @@ public class ListShoppingListFragment extends Fragment {
             url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+Constant.tokenUser;
             MainActivity.startRequestHttp(url, "GET","");
             try {
-                if (Constant.mainObject.getString("result") != null && Constant.mainObject.getString("code").equals("0")) {
+                if (Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")) {
                     JSONArray listArray = Constant.mainObject.getJSONArray("result");
                     for (int i = 0; i < listArray.length(); i++) {
                         tmpObj = listArray.getJSONObject(i);
