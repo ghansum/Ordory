@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("mySharedPref",0);
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
-        if(statusConnect){
+        if(Constant.IS_CONNECTED){
             navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(2).setVisible(true);

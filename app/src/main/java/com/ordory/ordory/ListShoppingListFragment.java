@@ -101,7 +101,7 @@ public class ListShoppingListFragment extends Fragment {
         List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
-        if(statusConnect){
+        if(Constant.IS_CONNECTED){
             url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+Constant.tokenUser;
             MainActivity.startRequestHttp(url, "GET","");
             try {
