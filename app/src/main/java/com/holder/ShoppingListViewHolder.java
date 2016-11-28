@@ -1,5 +1,6 @@
 package com.holder;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -9,4 +10,6 @@ public class ShoppingListViewHolder {
 
     public TextView name;
     public TextView createdDate;
+    public Button editSLButton;
+    public Button deleteSLButton;
 }

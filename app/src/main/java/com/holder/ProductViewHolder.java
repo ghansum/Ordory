@@ -1,5 +1,6 @@
 package com.holder;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -9,4 +10,6 @@ public class ProductViewHolder {
     public TextView name;
     public TextView price;
     public TextView quantity;
+    public Button editButton;
+    public Button deleteButton;
 }

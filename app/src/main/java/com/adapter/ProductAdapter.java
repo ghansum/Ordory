@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.holder.ProductViewHolder;
 import com.models.Product;
+import com.ordory.ordory.MainActivity;
 import com.ordory.ordory.R;
+import com.utils.Constant;
 
 import java.util.List;
 
@@ -35,15 +38,39 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             viewHolder = new ProductViewHolder();
             viewHolder.name = (TextView) convertView.findViewById(R.id.productName);
             viewHolder.price = (TextView) convertView.findViewById(R.id.productPrice);
+            viewHolder.editButton = (Button) convertView.findViewById(R.id.button_edit_product);
+            viewHolder.deleteButton = (Button) convertView.findViewById(R.id.button_delete_product);
             //viewHolder.quantity = (TextView) convertView.findViewById(R.id.productQuantity);
 
             convertView.setTag(viewHolder);
         }
 
-        Product product = getItem(position);
+        final Product product = getItem(position);
 
         viewHolder.name.setText(product.getQuantity()+"x "+product.getName());
         viewHolder.price.setText("Prix unitaire : "+product.getPrice()+" €");
+
+        viewHolder.editButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //TODO renvoyer vers la page d'édition
+            }
+        });
+
+        viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Constant.tokenUser!=null && product.getId()>=0) {
+                    String url = Constant.WS_REMOVE_PRODUCT_URL + "?token=" + Constant.tokenUser + "&id=" + product.getId();
+                    MainActivity.startRequestHttp(url, "GET", "");
+
+
+
+                    //TODO Ajouter le refresh de page
+
+                }
+            }
+        });
 
         return convertView;
     }
