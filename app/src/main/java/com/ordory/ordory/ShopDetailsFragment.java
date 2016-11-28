@@ -2,6 +2,7 @@ package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -95,7 +96,9 @@ public class ShopDetailsFragment extends Fragment {
         int id, qty;
         double price;
         List<Product> products = new ArrayList<Product>();
-        if(Constant.IS_CONNECTED){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
+        if(statusConnect){
             url = Constant.WS_LIST_PRODUCT_URL+"?token="+Constant.tokenUser+"&shopping_list_id="+Constant.idList;
             MainActivity.startRequestHttp(url,"GET","");
 

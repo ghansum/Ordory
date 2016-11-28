@@ -108,8 +108,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        if(Constant.IS_CONNECTED){
+        SharedPreferences sharedPreferences = this.getSharedPreferences("mySharedPref",0);
+        boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
+        if(statusConnect){
             navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(2).setVisible(true);
@@ -292,6 +293,7 @@ public class MainActivity extends AppCompatActivity
                 editor.putString("firstname", Constant.resultJsonConnect.getString("firstname"));
                 editor.putString("lastname", Constant.resultJsonConnect.getString("lastname"));
                 editor.putString("token", Constant.resultJsonConnect.getString("token"));
+                editor.putBoolean("is_connected",true);
                 editor.commit();
                 Log.e("userConnectMain",Constant.tokenUser);
 

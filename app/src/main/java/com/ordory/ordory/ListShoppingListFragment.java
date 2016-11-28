@@ -2,6 +2,7 @@ package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -98,11 +99,13 @@ public class ListShoppingListFragment extends Fragment {
         int id;
         Date date;
         List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-        if(Constant.IS_CONNECTED){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
+        if(statusConnect){
             url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+Constant.tokenUser;
             MainActivity.startRequestHttp(url, "GET","");
             try {
-                if (Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")) {
+                if (Constant.mainObject.getString("result") != null && Constant.mainObject.getString("code").equals("0")) {
                     JSONArray listArray = Constant.mainObject.getJSONArray("result");
                     for (int i = 0; i < listArray.length(); i++) {
                         tmpObj = listArray.getJSONObject(i);
