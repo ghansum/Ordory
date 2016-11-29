@@ -102,7 +102,7 @@ public class RegisterFragment extends Fragment {
 
                         String url = Constant.WS_SUBSCRIBE_URL+"?email="+email+"&password="+password+"&firstname="+firstname+"&lastname="+lastname;
                        // String data = "{\"email\": \""+email+"\",\"password\": \""+password+"\",\"firstname\": \""+firstname+"\",\"lastname\": \""+lastname+"\" }";
-                        if(!email.isEmpty() && !password.isEmpty() && !lastname.isEmpty() && !firstname.isEmpty()) {
+                       /* if(!email.isEmpty() && !password.isEmpty() && !lastname.isEmpty() && !firstname.isEmpty()) {
                             MainActivity.startRequestHttp(url, "GET","");
                             // Log.e("response",response);
                             try {
@@ -119,7 +119,7 @@ public class RegisterFragment extends Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }
+                        }*/
                     }
                 }
         );

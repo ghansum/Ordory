@@ -102,8 +102,8 @@ public class ProductFormFragment extends Fragment {
                 productName = productName_edit.getText().toString();
                 price = price_edit.getText().toString();
                 quantity = quantity_edit.getText().toString();
-                String url = Constant.WS_CREATE_PRODUCT_URL+"?token="+tokenShared+"&shopping_list_id="+Constant.idList+"&name="+productName+"&quantity="+quantity+"&price="+price;
-                if(!productName.isEmpty() && !price.isEmpty() && !quantity.isEmpty()){
+               // String url = Constant.WS_CREATE_PRODUCT_URL+"?token="+tokenShared+"&shopping_list_id="+Constant.idList+"&name="+productName+"&quantity="+quantity+"&price="+price;
+               /* if(!productName.isEmpty() && !price.isEmpty() && !quantity.isEmpty()){
                     MainActivity.startRequestHttp(url, "GET","");
                     try{
                         if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
@@ -121,7 +121,7 @@ public class ProductFormFragment extends Fragment {
                     }
                 } else {
                     blocInfo.setText("Erreur, Veuillez remplir les champs du formulaire");
-                }
+                } */
             }
         });
 

@@ -15,8 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.utils.Constant;
+import com.utils.MyAsynctask;
 
 import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +29,7 @@ import org.json.JSONException;
  * Use the {@link ConnectFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ConnectFragment extends Fragment {
+public class ConnectFragment extends Fragment implements IConnectListner {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,7 +41,8 @@ public class ConnectFragment extends Fragment {
     private String password;
     private TextView infoConnectText;
     private Fragment frg = null;
-    SharedPreferences sharedPreferences;
+    public SharedPreferences sharedPreference;
+    private JSONObject resultJSON;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -87,44 +91,53 @@ public class ConnectFragment extends Fragment {
         infoConnectText = (TextView)view.findViewById(R.id.errorConnect);
         editEmail = (EditText) view.findViewById(R.id.email_connect);
         editPwd = (EditText) view.findViewById(R.id.password_connect);
+
         // on click event
+        final MyAsynctask asyncTask = new MyAsynctask();
+
+        asyncTask.setListner(new IConnectListner() {
+            @Override
+            public void onSuccess(JSONObject json) {
+                sharedPreference = getActivity().getSharedPreferences("mySharedPref",0);
+                SharedPreferences.Editor editor = sharedPreference.edit();
+
+                try {
+                    resultJSON = json.getJSONObject("result");
+                    editor.putString("firstName", resultJSON.getString("firstname"));
+                    editor.putString("lastName", resultJSON.getString("lastname"));
+                    editor.putString("email", resultJSON.getString("email"));
+                    editor.putString("userToken", resultJSON.getString("token"));
+                    editor.putBoolean("is_connected",true);
+                    editor.commit();
+
+                    frg = new ListShoppingListFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.connectFragment, frg);
+                    transaction.commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailed() {
+
+            }
+        });
 
         connectButton.setOnClickListener(
                 new View.OnClickListener() {
+
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View v) {
                         email = editEmail.getText().toString();
                         password = editPwd.getText().toString();
                         String url = Constant.WS_CONNECT_URL+"?email="+email+"&password="+password;
-                        if(!email.isEmpty() && !password.isEmpty()){
-                            MainActivity.startRequestHttp(url,"GET","");
-                            // Log.e("response",response);
-                            try {
-                                if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
-                                    //Add registration of user in the application
-                                    Constant.IS_CONNECTED = true;
-                                    MainActivity.threadConnect.start();
-                                    Constant.tokenUser = Constant.resultJsonConnect.getString("token");
-                                    frg = new ListShoppingListFragment();
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.connectFragment, frg);
-                                    transaction.commit();
-
-                                }else{
-                                    infoConnectText.setText("Erreur, identifiant ou mot de passe incorrect ");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }else{
-                            infoConnectText.setText("Erreur, veuillez remplir tous les champs ");
-                        }
-
-
+                        asyncTask.execute(url);
                     }
                 }
         );
-
         // Inflate the layout for this fragment
         return view;
     }
@@ -151,6 +164,16 @@ public class ConnectFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onSuccess(JSONObject obj) {
+
+    }
+
+    @Override
+    public void onFailed() {
+
     }
 
     /**

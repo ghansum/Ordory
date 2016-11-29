@@ -12,10 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.utils.Constant;
-
-import org.w3c.dom.Text;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -91,7 +87,7 @@ public class ListFormularFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shoppingListName = shoppingListNameEdit.getText().toString();
-                String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+Constant.tokenUser+"&name="+shoppingListName;
+               /* String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+Constant.tokenUser+"&name="+shoppingListName;
                 if(!shoppingListName.isEmpty()){
                     MainActivity.startRequestHttp(url, "GET","");
                     try{
@@ -109,7 +105,7 @@ public class ListFormularFragment extends Fragment {
                     }
                 } else {
                     shoppingListFormErr.setText("Veuillez remplir les champs du formulaire");
-                }
+                }*/
             }
         });
 

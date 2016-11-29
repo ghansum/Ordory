@@ -18,6 +18,7 @@ import com.adapter.ProductAdapter;
 import com.holder.ProductViewHolder;
 import com.models.Product;
 import com.utils.Constant;
+import com.utils.MyAsynctask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +49,7 @@ public class ShopDetailsFragment extends Fragment {
 
     private ListView listProductsView;
     private Button addProductButton;
+    private List<Product> products = new ArrayList<Product>();
 
     public ShopDetailsFragment() {
         // Required empty public constructor
@@ -89,39 +91,48 @@ public class ShopDetailsFragment extends Fragment {
         listProductsView = (ListView) view.findViewById(R.id.product_list_view);
         addProductButton = (Button) view.findViewById(R.id.button_add_product);
         TextView title = (TextView)view.findViewById(R.id.titleListProduct);
-        title.setText(Constant.listSelected);
-        String url = null;
-        String name;
-        JSONObject tmpObj;
-        int id, qty;
-        double price;
-        List<Product> products = new ArrayList<Product>();
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
-        if(Constant.IS_CONNECTED){
-            url = Constant.WS_LIST_PRODUCT_URL+"?token="+Constant.tokenUser+"&shopping_list_id="+Constant.idList;
-            MainActivity.startRequestHttp(url,"GET","");
+        String tokenUser = sharedPreferences.getString("userToken","");
+        int listshopId = sharedPreferences.getInt("listshopId",0);
+        title.setText(sharedPreferences.getString("listshopName",""));
+        final MyAsynctask asyncTask = new MyAsynctask();
 
-            try {
-                JSONArray lisProducts = Constant.mainObject.getJSONArray("result");
-                System.out.println("Data Product : "+ lisProducts);
-                for (int i = 0; i < lisProducts.length(); i++) {
-                    tmpObj = lisProducts.getJSONObject(i);
-                    id = Integer.parseInt(tmpObj.getString("id"));
-                    price = Double.parseDouble(tmpObj.getString("price"));
-                    qty = Integer.parseInt(tmpObj.getString("quantity"));
-                    name = tmpObj.getString("name");
-                    products.add(new Product(id, name, qty, price));
+        asyncTask.setListner(new IConnectListner() {
+
+            @Override
+            public void onSuccess(JSONObject obj) {
+                String name;
+                JSONObject tmpObj;
+                int id, qty;
+                double price;
+                JSONArray lisProducts;
+
+                try {
+                    lisProducts = obj.getJSONArray("result");
+                    System.out.println("Data Product : "+ lisProducts);
+                    for (int i = 0; i < lisProducts.length(); i++) {
+                        tmpObj = lisProducts.getJSONObject(i);
+                        id = Integer.parseInt(tmpObj.getString("id"));
+                        price = Double.parseDouble(tmpObj.getString("price"));
+                        qty = Integer.parseInt(tmpObj.getString("quantity"));
+                        name = tmpObj.getString("name");
+                        products.add(new Product(id, name, qty, price));
+                    }
+                    ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
+                    listProductsView.setAdapter(productAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-        }
 
-        ProductAdapter productAdapter = new ProductAdapter(this.getActivity(), products);
+            @Override
+            public void onFailed() {
 
-        listProductsView.setAdapter(productAdapter);
+            }
+        });
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +142,9 @@ public class ShopDetailsFragment extends Fragment {
                 fragmentTransaction.add(R.id.fragment_shoppingList, fragment).addToBackStack(null).commit();
             }
         });
+
+        String url = Constant.WS_LIST_PRODUCT_URL+"?token="+tokenUser+"&shopping_list_id="+listshopId;
+        asyncTask.execute(url);
 
         return view;
     }

@@ -3,6 +3,7 @@ package com.ordory.ordory;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,27 +19,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.models.User;
 import com.utils.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
@@ -47,6 +32,8 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment fragment = null;
     private Button btnview = null;
+    public SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +48,8 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        sharedPreferences = getSharedPreferences("mySharedPref",0);
+        editor = sharedPreferences.edit();
         /*
         TODO: connect the user and redirect him in another page ff
          */
@@ -77,7 +66,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         );
-        Constant.sharedPref = this.getSharedPreferences("mySharedPref",0);
 
         //Toast.makeText(MainActivity.this, "Inscription réussi avec succès !", Toast.LENGTH_SHORT).show();
 
@@ -108,9 +96,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        SharedPreferences sharedPreferences = this.getSharedPreferences("mySharedPref",0);
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
-        if(Constant.IS_CONNECTED){
+        if(statusConnect){
             navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(2).setVisible(true);
@@ -161,8 +148,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_addList) {
             fragment = new ListFormularFragment();
         } else if (id == R.id.nav_logout) {
-            Constant.IS_CONNECTED = false;
-            setContentView(R.layout.activity_main);
+             editor.clear();
+            editor.commit();
+            // setContentView(R.layout.activity_main);
         } else if (id == R.id.nav_subscribe) {
             fragment = new RegisterFragment();
         }else if (id == R.id.nav_home) {
@@ -183,123 +171,4 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
-
-
-    //String params = "?email="+email+"&password="+password;
-
-    public static void startRequestHttp(final String urlApi, final String method, final String data)
-    {
-
-        Runnable runnable = new Runnable() {
-            InputStream in;
-            URL url;
-            String result=null;
-            HttpURLConnection conn=null;
-
-            @Override
-            public void run() {
-                if(method.equals("GET")){
-                    try{
-                        // get URL content
-                        System.out.println("Entree 1....");
-                        url = new URL(urlApi);
-                        conn = (HttpURLConnection) url.openConnection();
-                        System.out.println("Entree Try....");
-                        conn.setReadTimeout(5000);
-                        conn.setConnectTimeout(5000);
-                        conn.setUseCaches(false);
-                        conn.setDoInput(true);
-                        conn.setDoOutput(false);
-                        conn.setRequestMethod(method);
-                        conn.setRequestProperty("Content-length", "0");
-                        conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-                        conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-                        in=conn.getInputStream();
-                        System.out.println("Before while....");
-                        // open the stream and put it into BufferedReader
-                        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                        String line;
-                        StringBuilder builder = new StringBuilder();
-                        while ((line=br.readLine())!= null) {
-                            builder.append(line);
-                        }
-                        result=builder.toString();
-                        Constant.responseHttp = builder.toString();
-                        Constant.mainObject = new JSONObject(result);
-                        Constant.resultJsonConnect = Constant.mainObject.getJSONObject("result");
-                        System.out.println("Code : "+Constant.mainObject.getString("code"));
-                        System.out.print("Result : "+result);
-                        br.close();
-                    }catch(MalformedURLException e) {
-                        result=null;
-                    } catch (IOException e) {
-                        result=null;
-                    } catch (Exception e) {
-                        result=null;
-                    }
-
-                    try {
-                        conn.getInputStream().close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    conn.disconnect();
-                }else{
-                    URL url = null;
-                    HttpURLConnection conn = null;
-                    try {
-                        url = new URL(urlApi);
-                        conn = (HttpURLConnection) url.openConnection();
-                        conn.setReadTimeout(10000 /* milliseconds */);
-                        conn.setConnectTimeout(15000 /* milliseconds */);
-                        conn.setRequestMethod("POST");
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8"); conn.setDoInput(true);
-                    String input = data; //  "{ \"music\": {\"title\": \"Drake\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
-                    OutputStream os = null;
-                    try {
-                        os = conn.getOutputStream();
-                        os.write(input.getBytes("UTF-8"));
-                        os.flush();
-
-                        // Starts the query
-                        conn.connect();
-                        int response = conn.getResponseCode();
-                        Log.e("POST",""+data);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-        Thread mythread = new Thread(runnable);
-        mythread.start();
-    }
-
-   static Thread threadConnect = new Thread(new Runnable() {
-        public void run() {
-            Log.e("userConn1","hoho");
-            try {
-                Constant.userConnected = new User(Constant.resultJsonConnect.getString("firstname"),Constant.resultJsonConnect.getString("lastname"),Constant.resultJsonConnect.getString("email"),Constant.resultJsonConnect.getString("token"));
-                Constant.tokenUser = Constant.resultJsonConnect.getString("token");
-                SharedPreferences.Editor editor = Constant.sharedPref.edit();
-                editor.clear();
-                editor.putString("email", Constant.resultJsonConnect.getString("email"));
-                editor.putString("firstname", Constant.resultJsonConnect.getString("firstname"));
-                editor.putString("lastname", Constant.resultJsonConnect.getString("lastname"));
-                editor.putString("token", Constant.resultJsonConnect.getString("token"));
-                editor.putBoolean("is_connected",true);
-                editor.commit();
-                Log.e("userConnectMain",Constant.tokenUser);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    });
 }

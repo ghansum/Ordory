@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.holder.ShoppingListViewHolder;
 import com.models.ShoppingList;
+import com.ordory.ordory.IConnectListner;
 import com.ordory.ordory.R;
 
 import java.util.List;

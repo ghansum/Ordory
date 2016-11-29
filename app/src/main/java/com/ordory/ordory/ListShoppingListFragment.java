@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.adapter.ShoppingListAdapter;
 import com.models.ShoppingList;
 import com.utils.Constant;
+import com.utils.MyAsynctask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,14 +49,14 @@ public class ListShoppingListFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
     private ListView listShoppingListView;
-
     private Button buttonAddShoppingList;
-
     private Fragment fragment;
-
     private FragmentTransaction transaction;
+    private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+    private String tokenUser;
+    private ShoppingList shopingList;
+    public SharedPreferences sharedList;
 
     public ListShoppingListFragment() {
         // Required empty public constructor
@@ -92,76 +93,79 @@ public class ListShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        String url;
-        String listName, dateList, name;
-        ShoppingList shopingList;
-        JSONObject tmpObj;
-        int id;
-        Date date;
-        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
-        boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
-        if(Constant.IS_CONNECTED){
-            url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+Constant.tokenUser;
-            MainActivity.startRequestHttp(url, "GET","");
-            try {
-                if (Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")) {
-                    JSONArray listArray = Constant.mainObject.getJSONArray("result");
+        View view = inflater.inflate(R.layout.fragment_list_shopping_list, container, false);
+        sharedList = getActivity().getSharedPreferences("mySharedPref",0);
+        listShoppingListView = (ListView) view.findViewById(R.id.product_list_view);
+        buttonAddShoppingList = (Button) view.findViewById(R.id.button_add_shopping_list);
+        tokenUser = sharedList.getString("userToken","");
+
+        final MyAsynctask asyncTask = new MyAsynctask();
+
+        asyncTask.setListner(new IConnectListner() {
+            @Override
+            public void onSuccess(JSONObject json) {
+                ShoppingListAdapter shoppingListAdapter;
+                String name;
+                JSONArray listArray;
+                JSONObject tmpObj;
+                int id;
+                Date date;
+
+                try {
+                    listArray = json.getJSONArray("result");
                     for (int i = 0; i < listArray.length(); i++) {
                         tmpObj = listArray.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         date = simpleDateFormat.parse(tmpObj.getString("created_date"));
                         name = tmpObj.getString("name");
-
                         shopingList = new ShoppingList(id,name,date,false);
                         shoppingLists.add(shopingList);
                         Log.e("name", tmpObj.getString("name"));
                     }
-                    Log.e("listShop","successful...");
-                    System.out.println("List shop : "+Constant.mainObject.getString("result"));
-                } else {
-                    Log.e("listShop","Error...");
+                    shoppingListAdapter = new ShoppingListAdapter(getActivity(), shoppingLists);
+                    listShoppingListView.setAdapter(shoppingListAdapter);
+
+
+                    listShoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                        @Override
+                        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
+                            ShoppingList itemselected = (ShoppingList) listShoppingListView.getItemAtPosition(position);
+                            SharedPreferences.Editor editor = sharedList.edit();
+                            editor.putString("listshopName",itemselected.getName());
+                            editor.putInt("listshopId",itemselected.getId());
+                            editor.commit();
+                            Fragment fragment = new ShopDetailsFragment();
+                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                            fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
+
+                buttonAddShoppingList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Fragment fragment = new ListFormularFragment();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+                    }
+                });
             }
-        }
 
-        View view = inflater.inflate(R.layout.fragment_list_shopping_list, container, false);
-        listShoppingListView = (ListView) view.findViewById(R.id.product_list_view);
-        buttonAddShoppingList = (Button) view.findViewById(R.id.button_add_shopping_list);
-
-        ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(this.getActivity(), shoppingLists);
-
-        listShoppingListView.setAdapter(shoppingListAdapter);
-
-        listShoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
-                ShoppingList itemselected = (ShoppingList) listShoppingListView.getItemAtPosition(position);
-                Constant.idList = itemselected.getId();
-                Constant.listSelected = itemselected.getName();
-                System.out.println("Item id : "+ Constant.idList);
-                Fragment fragment = new ShopDetailsFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+            public void onFailed() {
 
             }
         });
 
-        buttonAddShoppingList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new ListFormularFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
-            }
-        });
 
-
+        String url = Constant.WS_LIST_SHOPPINGLIST_URL+"?token="+tokenUser;
+        asyncTask.execute(url);
 
         return view;
       // return inflater.inflate(R.layout.fragment_list_shopping_list, container, false);

@@ -21,13 +21,4 @@ public class Constant {
     public static final String WS_LIST_SHOPPINGLIST_URL = "http://appspaces.fr/esgi/shopping_list/shopping_list/list.php";
     public static final String WS_REMOVE_SHOPPINGLIST_URL = "http://appspaces.fr/esgi/shopping_list/shopping_list/remove.php";
 
-    public static JSONObject resultJsonConnect;
-    public static JSONObject mainObject;
-    public static String responseHttp;
-    public static Boolean IS_CONNECTED = false;
-    public static User userConnected;
-    public static String tokenUser;
-    public static SharedPreferences sharedPref = null;
-    public static Integer idList=null;
-    public static String listSelected;
 }
