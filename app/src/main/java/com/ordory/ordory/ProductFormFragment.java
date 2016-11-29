@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.utils.Constant;
+import com.utils.MyAsynctask;
+
+import org.json.JSONObject;
 
 
 /**
@@ -36,7 +39,7 @@ public class ProductFormFragment extends Fragment {
     private EditText price_edit;
     private EditText quantity_edit;
     private TextView blocInfo;
-    private String tokenShared;
+    private String tokenUser;
     SharedPreferences sharedPreferences;
 
     // TODO: Rename and change types of parameters
@@ -90,9 +93,30 @@ public class ProductFormFragment extends Fragment {
         productName_edit = (EditText) view.findViewById(R.id.productName);
         price_edit = (EditText) view.findViewById(R.id.price);
         quantity_edit = (EditText) view.findViewById(R.id.quantity);
-        sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
-        tokenShared = sharedPreferences.getString("token", null);
         blocInfo = (TextView) view.findViewById(R.id.createProductInfo);
+
+        sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        tokenUser = sharedPreferences.getString("userToken","");
+        final int listId = sharedPreferences.getInt("listshopId",0);
+
+        final MyAsynctask asyncTask = new MyAsynctask();
+
+        asyncTask.setListner(new IConnectListner() {
+
+            @Override
+            public void onSuccess(JSONObject obj) {
+                //Add registration of user in the application
+                Fragment frg = new ShopDetailsFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.product_form_fragment, frg);
+                transaction.commit();
+            }
+
+            @Override
+            public void onFailed() {
+                blocInfo.setText("Erreur lors de la creation du produit");
+            }
+        });
 
         btnCreateProduct = (Button)view.findViewById(R.id.btn_create_shoplist);
         btnCreateProduct.setOnClickListener(new View.OnClickListener(){
@@ -102,26 +126,8 @@ public class ProductFormFragment extends Fragment {
                 productName = productName_edit.getText().toString();
                 price = price_edit.getText().toString();
                 quantity = quantity_edit.getText().toString();
-               // String url = Constant.WS_CREATE_PRODUCT_URL+"?token="+tokenShared+"&shopping_list_id="+Constant.idList+"&name="+productName+"&quantity="+quantity+"&price="+price;
-               /* if(!productName.isEmpty() && !price.isEmpty() && !quantity.isEmpty()){
-                    MainActivity.startRequestHttp(url, "GET","");
-                    try{
-                        if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
-                            System.out.println("Resultat Create Product : "+Constant.mainObject.getJSONArray("result"));
-                            //Add registration of user in the application
-                            Fragment frg = new ListShoppingListFragment();
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragment_form_shopping_list, frg);
-                            transaction.commit();
-                        }else{
-                            blocInfo.setText("Erreur lors de la creation du produit");
-                        }
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-                } else {
-                    blocInfo.setText("Erreur, Veuillez remplir les champs du formulaire");
-                } */
+                String url = Constant.WS_CREATE_PRODUCT_URL+"?token="+tokenUser+"&shopping_list_id="+listId+"&name="+productName+"&quantity="+quantity+"&price="+price;
+                asyncTask.execute(url);
             }
         });
 

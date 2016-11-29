@@ -2,6 +2,7 @@ package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,8 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.utils.Constant;
+import com.utils.MyAsynctask;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,6 +94,26 @@ public class RegisterFragment extends Fragment {
         editlastName = (EditText) view.findViewById(R.id.lastName);
 
         registerButton = (Button)view.findViewById(R.id.subscribe_button);
+
+        final MyAsynctask asyncTask = new MyAsynctask();
+
+        asyncTask.setListner(new IConnectListner() {
+
+            @Override
+            public void onSuccess(JSONObject obj) {
+                Log.e("subscribe","successful...");
+                frg = new ConnectFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.registerFragment, frg);
+                transaction.commit();
+            }
+
+            @Override
+            public void onFailed() {
+                Log.e("subscribe","Error...");
+            }
+        });
+
         registerButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -99,27 +122,8 @@ public class RegisterFragment extends Fragment {
                         password = editPwd.getText().toString();
                         lastname = editlastName.getText().toString();
                         firstname = editfirstName.getText().toString();
-
                         String url = Constant.WS_SUBSCRIBE_URL+"?email="+email+"&password="+password+"&firstname="+firstname+"&lastname="+lastname;
-                       // String data = "{\"email\": \""+email+"\",\"password\": \""+password+"\",\"firstname\": \""+firstname+"\",\"lastname\": \""+lastname+"\" }";
-                       /* if(!email.isEmpty() && !password.isEmpty() && !lastname.isEmpty() && !firstname.isEmpty()) {
-                            MainActivity.startRequestHttp(url, "GET","");
-                            // Log.e("response",response);
-                            try {
-                                if (Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")) {
-                                    //Add registration of user in the application
-                                    Log.e("subscribe","successful...");
-                                    frg = new ConnectFragment();
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.registerFragment, frg);
-                                    transaction.commit();
-                                } else {
-                                    Log.e("subscribe","Error...");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }*/
+                        asyncTask.execute(url);
                     }
                 }
         );
