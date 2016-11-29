@@ -11,59 +11,63 @@
 
     tools:context=".ConnectFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:textSize="36dp"
-            android:textAlignment="center"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="24dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/colorPrimary"
-            android:text="Connexion"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:id="@+id/email_connect"
-            />
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Password"
-            android:id="@+id/password_connect"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:textSize="36dp"
+                android:textAlignment="center"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="24dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Connexion"/>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/connect_button"
-            android:layout_marginTop="25dp"
-            android:background="@color/colorPink"
-            android:textColor="@color/colorWhite"
-            android:textSize="24dp"
-            android:text="Connexion"
-            />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:id="@+id/email_connect"
+                />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:id="@+id/password_connect"
+                />
 
-        <TextView
-            android:id="@+id/errorConnect"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="14dp"
-            android:textAlignment="center"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="27dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/colorAccent"
-            android:text=""/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/connect_button"
+                android:layout_marginTop="25dp"
+                android:background="@color/colorPink"
+                android:textColor="@color/colorWhite"
+                android:textSize="24dp"
+                android:text="Connexion"
+                />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/errorConnect"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textSize="14dp"
+                android:textAlignment="center"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="27dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorAccent"
+                android:text=""/>
 
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

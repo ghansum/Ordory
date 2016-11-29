@@ -11,43 +11,45 @@
     tools:context=".ListShoppingListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="273dp"
-            android:layout_height="49dp"
-            android:textAlignment="center"
-            android:textSize="22dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="@string/list_shoppinglist_title"
-            android:layout_marginTop="10dp" />
-
-        <Button
-            android:id="@+id/button_add_shopping_list"
-            android:layout_width="49dp"
-            android:layout_height="49dp"
-            android:textAlignment="center"
-            android:background="@drawable/roundedbouton"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="30dp"
-            android:text="+"
-            android:layout_gravity="right"
-            android:layout_marginTop="-60dp"
-            android:layout_marginRight="5dp" />
-
-
-
-        <ListView
-            android:id="@+id/product_list_view"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="17dp"
-            android:layout_height="421dp"></ListView>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="273dp"
+                android:layout_height="49dp"
+                android:textAlignment="center"
+                android:textSize="22dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/list_shoppinglist_title"
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/button_add_shopping_list"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:textAlignment="center"
+                android:background="@drawable/roundedbouton"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="30dp"
+                android:text="+"
+                android:layout_gravity="right"
+                android:layout_marginTop="-60dp"
+                android:layout_marginRight="5dp" />
 
 
+
+            <ListView
+                android:id="@+id/product_list_view"
+                android:layout_width="match_parent"
+                android:layout_marginTop="17dp"
+                android:layout_height="421dp"></ListView>
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
