@@ -57,6 +57,7 @@ public class ListShoppingListFragment extends Fragment {
     private String tokenUser;
     private ShoppingList shopingList;
     public SharedPreferences sharedList;
+    private int listCpt=0;
 
     public ListShoppingListFragment() {
         // Required empty public constructor
@@ -114,6 +115,7 @@ public class ListShoppingListFragment extends Fragment {
                 try {
                     listArray = json.getJSONArray("result");
                     for (int i = 0; i < listArray.length(); i++) {
+                        listCpt +=1;
                         tmpObj = listArray.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -134,6 +136,7 @@ public class ListShoppingListFragment extends Fragment {
                             SharedPreferences.Editor editor = sharedList.edit();
                             editor.putString("listshopName",itemselected.getName());
                             editor.putInt("listshopId",itemselected.getId());
+                            editor.putInt("nbListShop",listCpt);
                             editor.commit();
                             Fragment fragment = new ShopDetailsFragment();
                             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

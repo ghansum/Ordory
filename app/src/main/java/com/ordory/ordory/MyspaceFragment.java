@@ -1,12 +1,15 @@
 package com.ordory.ordory;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,15 @@ public class MyspaceFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public static String email;
+    public static String firstname;
+    public static String lastname;
+
+    private TextView txtEmail;
+    private TextView txtFirstName;
+    private TextView txtLastName;
+    private TextView txtNbproduct;
+    private TextView txtNblistShop;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,7 +75,28 @@ public class MyspaceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        txtFirstName = (TextView)view.findViewById(R.id.txt_userspace_firstname);
+        txtLastName = (TextView)view.findViewById(R.id.txt_userspace_lastname);
+        txtEmail = (TextView)view.findViewById(R.id.txt_userspace_email);
+        txtNblistShop = (TextView)view.findViewById(R.id.txt_userspace_numberListshop);
+        txtNbproduct = (TextView)view.findViewById(R.id.txt_userspace_numberProduct);
+
+        txtFirstName.setText("Nom : "+sharedPreferences.getString("firstName","undefined"));
+        txtLastName.setText("Prénom : "+sharedPreferences.getString("lastName","undefined"));
+        txtEmail.setText("E-mail : "+sharedPreferences.getString("email","undefined"));
+
+        int nbList = sharedPreferences.getInt("nbListShop",-1);
+        int nbproduct = sharedPreferences.getInt("nbProduct",-1);
+        if(nbList > 0 && nbproduct > 0){
+            txtNblistShop.setText(sharedPreferences.getInt("nbListShop",-1));
+            txtNblistShop.setText(sharedPreferences.getInt("nbProduct",-1));
+        }
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
