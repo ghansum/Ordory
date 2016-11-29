@@ -67,13 +67,8 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
         viewHolder.deleteSLButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if(Constant.tokenUser!=null && shoppingList.getId()>=0) {
-                    String url = Constant.WS_REMOVE_SHOPPINGLIST_URL + "?token=" + Constant.tokenUser + "&id=" + shoppingList.getId();
-                    MainActivity.startRequestHttp(url, "GET", "");
-
-                    //TODO Ajouter le refresh de page
-
-                }*/
+                // String url = Constant.WS_REMOVE_SHOPPINGLIST_URL + "?token=" + Constant.tokenUser + "&id=" + shoppingList.getId();
+              
             }
         });
 
