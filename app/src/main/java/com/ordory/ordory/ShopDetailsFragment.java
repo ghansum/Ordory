@@ -50,6 +50,8 @@ public class ShopDetailsFragment extends Fragment {
     private ListView listProductsView;
     private Button addProductButton;
     private List<Product> products = new ArrayList<Product>();
+    private Button editProductButton;
+    private Button deleteProductButton;
 
     public ShopDetailsFragment() {
         // Required empty public constructor
@@ -90,6 +92,8 @@ public class ShopDetailsFragment extends Fragment {
 
         listProductsView = (ListView) view.findViewById(R.id.product_list_view);
         addProductButton = (Button) view.findViewById(R.id.button_add_product);
+        editProductButton = (Button) view.findViewById(R.id.button_edit_product);
+        deleteProductButton = (Button) view.findViewById(R.id.button_delete_product);
         TextView title = (TextView)view.findViewById(R.id.titleListProduct);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
