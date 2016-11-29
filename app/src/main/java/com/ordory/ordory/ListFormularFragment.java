@@ -3,6 +3,7 @@ package com.ordory.ordory;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.utils.Constant;
+import com.utils.MyAsynctask;
+
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +40,7 @@ public class ListFormularFragment extends Fragment {
 
     private EditText shoppingListNameEdit;
     private String shoppingListName;
-
+    private String tokenUser;
     private Button confirmButton;
 
     private TextView shoppingListFormErr;
@@ -82,30 +88,33 @@ public class ListFormularFragment extends Fragment {
 
         shoppingListFormErr = (TextView) view.findViewById(R.id.shoppingListFormErr);
 
-        confirmButton.setOnClickListener(new View.OnClickListener(){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        tokenUser = sharedPreferences.getString("userToken","");
+        final MyAsynctask asyncTask = new MyAsynctask();
 
+        asyncTask.setListner(new IConnectListner() {
+
+            @Override
+            public void onSuccess(JSONObject obj) {
+                //Add registration of user in the application
+                Fragment frg = new ListShoppingListFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_form_shopping_list, frg);
+                transaction.commit();
+            }
+
+            @Override
+            public void onFailed() {
+                shoppingListFormErr.setText("Erreur lors de la creation de la liste");
+            }
+        });
+
+        confirmButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 shoppingListName = shoppingListNameEdit.getText().toString();
-               /* String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+Constant.tokenUser+"&name="+shoppingListName;
-                if(!shoppingListName.isEmpty()){
-                    MainActivity.startRequestHttp(url, "GET","");
-                    try{
-                        if(Constant.mainObject != null && Constant.mainObject.getString("code").equals("0")){
-                            //Add registration of user in the application
-                            Fragment frg = new ListShoppingListFragment();
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragment_form_shopping_list, frg);
-                            transaction.commit();
-                        }else{
-                            shoppingListFormErr.setText("Erreur lors de la creation de la liste");
-                        }
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-                } else {
-                    shoppingListFormErr.setText("Veuillez remplir les champs du formulaire");
-                }*/
+                String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+tokenUser+"&name="+shoppingListName;
+                asyncTask.execute(url);
             }
         });
 

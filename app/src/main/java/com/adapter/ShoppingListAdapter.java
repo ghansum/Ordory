@@ -68,7 +68,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
             @Override
             public void onClick(View v) {
                 // String url = Constant.WS_REMOVE_SHOPPINGLIST_URL + "?token=" + Constant.tokenUser + "&id=" + shoppingList.getId();
-              
+
             }
         });
 
