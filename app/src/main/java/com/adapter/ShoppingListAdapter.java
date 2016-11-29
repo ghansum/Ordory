@@ -75,7 +75,6 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
         asyncTask.setListner(new IConnectListner() {
             @Override
             public void onSuccess(JSONObject obj) {
-
                 Fragment fragment = new ListShoppingListFragment();
                 FragmentTransaction fragmentTransaction = ((Activity) getContext()).getFragmentManager().beginTransaction();
                 fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
