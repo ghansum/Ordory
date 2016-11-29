@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BracketFragment.OnFragmentInteractionListener} interface
+ * {@link MyspaceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BracketFragment#newInstance} factory method to
+ * Use the {@link MyspaceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BracketFragment extends Fragment {
+public class MyspaceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,7 +28,7 @@ public class BracketFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public BracketFragment() {
+    public MyspaceFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +38,11 @@ public class BracketFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BracketFragment.
+     * @return A new instance of fragment MyspaceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BracketFragment newInstance(String param1, String param2) {
-        BracketFragment fragment = new BracketFragment();
+    public static MyspaceFragment newInstance(String param1, String param2) {
+        MyspaceFragment fragment = new MyspaceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
