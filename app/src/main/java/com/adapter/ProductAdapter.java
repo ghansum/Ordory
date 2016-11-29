@@ -62,15 +62,9 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if(Constant.tokenUser!=null && product.getId()>=0) {
-                    String url = Constant.WS_REMOVE_PRODUCT_URL + "?token=" + Constant.tokenUser + "&id=" + product.getId();
-                    MainActivity.startRequestHttp(url, "GET", "");
 
+                // String url = Constant.WS_REMOVE_PRODUCT_URL + "?token=" + Constant.tokenUser + "&id=" + product.getId();
 
-
-                    //TODO Ajouter le refresh de page
-
-                }*/
             }
         });
 

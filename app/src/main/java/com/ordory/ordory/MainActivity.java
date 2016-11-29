@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_addList) {
             fragment = new ListFormularFragment();
         } else if (id == R.id.nav_logout) {
-             editor.clear();
+            editor.clear();
             editor.commit();
             // setContentView(R.layout.activity_main);
         } else if (id == R.id.nav_subscribe) {
