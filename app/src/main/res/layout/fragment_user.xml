@@ -85,7 +85,7 @@
                         android:textSize="76dp"
                         android:textColor="@color/colorBlueGrey"
                         android:textAlignment="center"
-                        android:text=" "/>
+                        android:text="5"/>
 
                     <TextView
                         android:id="@+id/txt_userspace_listshop"
@@ -104,28 +104,28 @@
                     android:layout_height="203dp"
                     android:background="@color/colorCyan"
                     android:layout_marginLeft="7dp"
+                    android:orientation="vertical"
                     android:layout_gravity="right|center_vertical">
 
                     <TextView
-                        android:id="@+id/txt_userspace_numberProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginTop="30dp"
-                        android:textSize="76dp"
-                        android:textColor="@color/colorBlueGrey"
-                        android:textAlignment="center"
-                        android:text=" "/>
+                        android:id="@+id/redirectProduct"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="19dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:background="@drawable/ic_add_shopping"/>
 
                     <TextView
                         android:id="@+id/txt_userspace_product"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
-                        android:layout_marginTop="80dp"
-                        android:textSize="26dp"
+                        android:layout_marginTop="85dp"
+                        android:textSize="21dp"
                         android:layout_alignParentBottom="true"
                         android:textColor="@color/colorBlueGrey"
                         android:textAlignment="center"
-                        android:text="produit(s)"/>
+                        android:text="Voir mes listes"/>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

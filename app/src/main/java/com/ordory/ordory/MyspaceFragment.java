@@ -35,7 +35,6 @@ public class MyspaceFragment extends Fragment {
     private TextView txtEmail;
     private TextView txtFirstName;
     private TextView txtLastName;
-    private TextView txtNbproduct;
     private TextView txtNblistShop;
 
     private OnFragmentInteractionListener mListener;
@@ -82,20 +81,12 @@ public class MyspaceFragment extends Fragment {
         txtLastName = (TextView)view.findViewById(R.id.txt_userspace_lastname);
         txtEmail = (TextView)view.findViewById(R.id.txt_userspace_email);
         txtNblistShop = (TextView)view.findViewById(R.id.txt_userspace_numberListshop);
-        txtNbproduct = (TextView)view.findViewById(R.id.txt_userspace_numberProduct);
 
         txtFirstName.setText("Nom : "+sharedPreferences.getString("firstName","undefined"));
         txtLastName.setText("Prénom : "+sharedPreferences.getString("lastName","undefined"));
         txtEmail.setText("E-mail : "+sharedPreferences.getString("email","undefined"));
 
-        int nbList = sharedPreferences.getInt("nbListShop",-1);
-        int nbproduct = sharedPreferences.getInt("nbProduct",-1);
-        if(nbList > 0 && nbproduct > 0){
-            txtNblistShop.setText(sharedPreferences.getInt("nbListShop",-1));
-            txtNblistShop.setText(sharedPreferences.getInt("nbProduct",-1));
-        }
-
-
+        //int nbList = sharedPreferences.getInt("nbListShop",-1);
         return view;
     }
 
