@@ -1,10 +1,7 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,22 +11,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import com.utils.Constant;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RegisterFragment.OnFragmentInteractionListener, ConnectFragment.OnFragmentInteractionListener,
-                   BracketFragment.OnFragmentInteractionListener, ListShoppingListFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
+        MyspaceFragment.OnFragmentInteractionListener, ListShoppingListFragment.OnFragmentInteractionListener, ListFormularFragment.OnFragmentInteractionListener ,
                    ShopDetailsFragment.OnFragmentInteractionListener, ProductFormFragment.OnFragmentInteractionListener, EditProductFormFragment.OnFragmentInteractionListener,
                    EditShoppingListFormFragment.OnFragmentInteractionListener{
+
+
 
     private Fragment fragment = null;
     private Button btnview = null;
@@ -99,14 +95,14 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
         if(statusConnect){
-            navigationView.getMenu().getItem(0).setVisible(false);
+            navigationView.getMenu().getItem(0).setVisible(true);
             navigationView.getMenu().getItem(1).setVisible(false);
             navigationView.getMenu().getItem(2).setVisible(true);
             navigationView.getMenu().getItem(3).setVisible(true);
             navigationView.getMenu().getItem(4).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(true); // because now the new size is 3
         }else{
-            navigationView.getMenu().getItem(0).setVisible(true);
+            navigationView.getMenu().getItem(0).setVisible(false);
             navigationView.getMenu().getItem(1).setVisible(true);
             navigationView.getMenu().getItem(2).setVisible(false);
             navigationView.getMenu().getItem(3).setVisible(false);
@@ -151,11 +147,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             editor.clear();
             editor.commit();
+            fragment = new ConnectFragment();
             // setContentView(R.layout.activity_main);
         } else if (id == R.id.nav_subscribe) {
             fragment = new RegisterFragment();
-        }else if (id == R.id.nav_home) {
-            setContentView(R.layout.activity_main);
+        }else if (id == R.id.nav_userspace) {
+            fragment = new MyspaceFragment();
         }
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

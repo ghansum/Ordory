@@ -57,6 +57,8 @@ public class ListShoppingListFragment extends Fragment {
     private String tokenUser;
     private ShoppingList shopingList;
     public SharedPreferences sharedList;
+    private int listCpt=0;
+    SharedPreferences.Editor editor;
 
     public ListShoppingListFragment() {
         // Required empty public constructor
@@ -95,6 +97,8 @@ public class ListShoppingListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_shopping_list, container, false);
         sharedList = getActivity().getSharedPreferences("mySharedPref",0);
+        editor = sharedList.edit();
+
         listShoppingListView = (ListView) view.findViewById(R.id.product_list_view);
         buttonAddShoppingList = (Button) view.findViewById(R.id.button_add_shopping_list);
         tokenUser = sharedList.getString("userToken","");
@@ -114,6 +118,7 @@ public class ListShoppingListFragment extends Fragment {
                 try {
                     listArray = json.getJSONArray("result");
                     for (int i = 0; i < listArray.length(); i++) {
+                        listCpt +=1;
                         tmpObj = listArray.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -125,13 +130,12 @@ public class ListShoppingListFragment extends Fragment {
                     }
                     shoppingListAdapter = new ShoppingListAdapter(getActivity(), shoppingLists);
                     listShoppingListView.setAdapter(shoppingListAdapter);
-
-
+                    editor.putInt("nbListShop",listCpt);
+                    editor.commit();
                     listShoppingListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                         @Override
                         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
                             ShoppingList itemselected = (ShoppingList) listShoppingListView.getItemAtPosition(position);
-                            SharedPreferences.Editor editor = sharedList.edit();
                             editor.putString("listshopName",itemselected.getName());
                             editor.putInt("listshopId",itemselected.getId());
                             editor.commit();

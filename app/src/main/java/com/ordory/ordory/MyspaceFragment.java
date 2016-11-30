@@ -1,22 +1,25 @@
 package com.ordory.ordory;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BracketFragment.OnFragmentInteractionListener} interface
+ * {@link MyspaceFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link BracketFragment#newInstance} factory method to
+ * Use the {@link MyspaceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BracketFragment extends Fragment {
+public class MyspaceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,10 +28,18 @@ public class BracketFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public static String email;
+    public static String firstname;
+    public static String lastname;
+
+    private TextView txtEmail;
+    private TextView txtFirstName;
+    private TextView txtLastName;
+    private TextView txtNblistShop;
 
     private OnFragmentInteractionListener mListener;
 
-    public BracketFragment() {
+    public MyspaceFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +49,11 @@ public class BracketFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BracketFragment.
+     * @return A new instance of fragment MyspaceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BracketFragment newInstance(String param1, String param2) {
-        BracketFragment fragment = new BracketFragment();
+    public static MyspaceFragment newInstance(String param1, String param2) {
+        MyspaceFragment fragment = new MyspaceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,7 +74,20 @@ public class BracketFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        txtFirstName = (TextView)view.findViewById(R.id.txt_userspace_firstname);
+        txtLastName = (TextView)view.findViewById(R.id.txt_userspace_lastname);
+        txtEmail = (TextView)view.findViewById(R.id.txt_userspace_email);
+        txtNblistShop = (TextView)view.findViewById(R.id.txt_userspace_numberListshop);
+
+        txtFirstName.setText("Nom : "+sharedPreferences.getString("firstName","undefined"));
+        txtLastName.setText("Prénom : "+sharedPreferences.getString("lastName","undefined"));
+        txtEmail.setText("E-mail : "+sharedPreferences.getString("email","undefined"));
+
+        //int nbList = sharedPreferences.getInt("nbListShop",-1);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

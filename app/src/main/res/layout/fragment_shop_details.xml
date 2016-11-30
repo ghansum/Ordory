@@ -41,7 +41,8 @@
             <ListView
                 android:id="@+id/product_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="421dp"></ListView>
+                android:layout_height="421dp"
+                android:backgroundTint="@color/abc_tint_edittext"></ListView>
 
         </LinearLayout>
     </ScrollView>

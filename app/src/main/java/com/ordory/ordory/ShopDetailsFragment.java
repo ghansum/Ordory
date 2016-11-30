@@ -52,6 +52,7 @@ public class ShopDetailsFragment extends Fragment {
     private List<Product> products = new ArrayList<Product>();
     private Button editProductButton;
     private Button deleteProductButton;
+    private int productCpt=0;
 
     public ShopDetailsFragment() {
         // Required empty public constructor
@@ -97,6 +98,7 @@ public class ShopDetailsFragment extends Fragment {
         TextView title = (TextView)view.findViewById(R.id.titleListProduct);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
         String tokenUser = sharedPreferences.getString("userToken","");
         int listshopId = sharedPreferences.getInt("listshopId",0);
@@ -117,6 +119,7 @@ public class ShopDetailsFragment extends Fragment {
                     lisProducts = obj.getJSONArray("result");
                     System.out.println("Data Product : "+ lisProducts);
                     for (int i = 0; i < lisProducts.length(); i++) {
+                        productCpt +=1;
                         tmpObj = lisProducts.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
                         price = Double.parseDouble(tmpObj.getString("price"));
@@ -126,6 +129,8 @@ public class ShopDetailsFragment extends Fragment {
                     }
                     ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
                     listProductsView.setAdapter(productAdapter);
+                    edit.putInt("nbProduct",productCpt);
+                    edit.commit();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
