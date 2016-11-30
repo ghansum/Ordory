@@ -31,8 +31,12 @@
     <string name="ws_urlShoppingListRemove">http://appspaces.fr/esgi/shopping_list/shopping_list/remove.php</string>
 
     <!-- String View -->
+    <string name="btn_edit">Modifier</string>
+
+
     <!-- String for list shopping list view-->
     <string name="list_shoppinglist_title">Mes listes de course</string>
+
 
     <!-- Menu String -->
     <string name="menu_shoppinglist_search">Rechercher</string>
@@ -40,10 +44,13 @@
     <string name="menu_shoppinglist_add">Ajouter</string>
     <string name="list_shoppinglist_detail_title">Produits de ma liste</string>
     <string name="add_shppinglist_title">Ajout nouvelle liste</string>
+    <string name="update_shoppinglist_title">Modification de la liste</string>
 
     <!-- Product form value -->
     <string name="add_product">Ajout d\'un produit</string>
+    <string name="edit_product">Modification d\'un produit</string>
     <string name="product_name">Nom du produit</string>
     <string name="product_price">Prix du produit</string>
     <string name="product_quantity">Quantité</string>
+
 </resources>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.holder.ShoppingListViewHolder;
 import com.models.ShoppingList;
+import com.ordory.ordory.EditShoppingListFormFragment;
 import com.ordory.ordory.IConnectListner;
 import com.ordory.ordory.ListShoppingListFragment;
 import com.ordory.ordory.MainActivity;
@@ -90,7 +91,17 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
         viewHolder.editSLButton.setOnClickListener(new View.OnClickListener(){
              @Override
             public void onClick(View v) {
-                //TODO renvoyer vers la page d'édition
+                 sharedPreferences = ((Activity) getContext()).getSharedPreferences("mySharedPref", 0);
+                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                 editor.putString("shoppingListNameToEdit", shoppingList.getName());
+                 editor.putInt("shoppingListIdToEdit", shoppingList.getId());
+                 editor.putBoolean("shoppingListStatusToEdit", shoppingList.isCompleted());
+                 editor.commit();
+
+                 Fragment fragment = new EditShoppingListFormFragment();
+                 FragmentTransaction fragmentTransaction = ((Activity) getContext()).getFragmentManager().beginTransaction();
+                 fragmentTransaction.add(R.id.fragment_products, fragment).addToBackStack(null).commit();
+
             }
         });
 

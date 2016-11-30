@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.holder.ProductViewHolder;
 import com.models.Product;
+import com.ordory.ordory.EditProductFormFragment;
 import com.ordory.ordory.IConnectListner;
 import com.ordory.ordory.ListShoppingListFragment;
 import com.ordory.ordory.MainActivity;
@@ -82,7 +83,18 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         viewHolder.editButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //TODO renvoyer vers la page d'édition
+
+                sharedPreferences = ((Activity) getContext()).getSharedPreferences("mySharedPref", 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("idProductToEdit", product.getId());
+                editor.putString("productNameToEdit", product.getName());
+                editor.putInt("productQuantityToEdit", product.getQuantity());
+                editor.putString("productPriceToEdit", product.getPrice()+"");
+                editor.commit();
+
+                Fragment fragment = new EditProductFormFragment();
+                FragmentTransaction fragmentTransaction = ((Activity) getContext()).getFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.fragment_shoppingList, fragment).addToBackStack(null).commit();
             }
         });
 
