@@ -99,6 +99,8 @@ public class EditShoppingListFormFragment extends Fragment {
         boolean shoppingListStatusToEdit = sharedPreferences.getBoolean("shoppingListStatusToEdit", true);
 
         isActive.setChecked(shoppingListStatusToEdit);
+
+
         shoppingListNameEdit.setText(shoppingListNameToEdit);
 
         final MyAsynctask asynctask = new MyAsynctask();

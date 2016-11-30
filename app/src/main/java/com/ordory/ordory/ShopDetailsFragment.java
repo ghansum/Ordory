@@ -50,6 +50,7 @@ public class ShopDetailsFragment extends Fragment {
     private ListView listProductsView;
     private Button addProductButton;
     private List<Product> products = new ArrayList<Product>();
+    private TextView totalPrice;
     private Button editProductButton;
     private Button deleteProductButton;
     private int productCpt=0;
@@ -95,6 +96,7 @@ public class ShopDetailsFragment extends Fragment {
         addProductButton = (Button) view.findViewById(R.id.button_add_product);
         editProductButton = (Button) view.findViewById(R.id.button_edit_product);
         deleteProductButton = (Button) view.findViewById(R.id.button_delete_product);
+        totalPrice = (TextView) view.findViewById(R.id.totalPrice);
         TextView title = (TextView)view.findViewById(R.id.titleListProduct);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
@@ -117,9 +119,9 @@ public class ShopDetailsFragment extends Fragment {
 
                 try {
                     lisProducts = obj.getJSONArray("result");
-                    System.out.println("Data Product : "+ lisProducts);
+                    System.out.println("Data Product : " + lisProducts);
                     for (int i = 0; i < lisProducts.length(); i++) {
-                        productCpt +=1;
+                        productCpt += 1;
                         tmpObj = lisProducts.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
                         price = Double.parseDouble(tmpObj.getString("price"));
@@ -129,6 +131,9 @@ public class ShopDetailsFragment extends Fragment {
                     }
                     ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
                     listProductsView.setAdapter(productAdapter);
+                    if (products.size() > 0){
+                        totalPrice.setText("Prix total : " + countTotalPrice());
+                    }
                     edit.putInt("nbProduct",productCpt);
                     edit.commit();
 
@@ -195,5 +200,14 @@ public class ShopDetailsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private double countTotalPrice(){
+        double total = 0;
+        for(Product product : products){
+            total = total + (product.getPrice()*product.getQuantity());
+        }
+
+        return total;
     }
 }

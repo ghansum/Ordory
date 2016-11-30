@@ -36,6 +36,7 @@
 
     <!-- String for list shopping list view-->
     <string name="list_shoppinglist_title">Mes listes de course</string>
+    <string name="totalPrice">Prix total : </string>
 
 
     <!-- Menu String -->
