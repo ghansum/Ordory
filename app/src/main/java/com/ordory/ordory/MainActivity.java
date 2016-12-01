@@ -95,19 +95,19 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
         if(statusConnect){
-            navigationView.getMenu().getItem(0).setVisible(true);
-            navigationView.getMenu().getItem(1).setVisible(false);
-            navigationView.getMenu().getItem(2).setVisible(true);
-            navigationView.getMenu().getItem(3).setVisible(true);
-            navigationView.getMenu().getItem(4).setVisible(false);
-            navigationView.getMenu().getItem(3).setVisible(true); // because now the new size is 3
+            navigationView.getMenu().findItem(R.id.nav_userspace).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_products).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_addList).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_login).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_subscribe).setVisible(false);
         }else{
-            navigationView.getMenu().getItem(0).setVisible(false);
-            navigationView.getMenu().getItem(1).setVisible(true);
-            navigationView.getMenu().getItem(2).setVisible(false);
-            navigationView.getMenu().getItem(3).setVisible(false);
-            navigationView.getMenu().getItem(4).setVisible(true);
-            navigationView.getMenu().getItem(5).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_userspace).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_products).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_addList).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_login).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_subscribe).setVisible(true);
         }
 
         menu.clear();

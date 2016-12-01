@@ -86,7 +86,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        final View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         editEmail = (EditText) view.findViewById(R.id.email);
         editPwd = (EditText) view.findViewById(R.id.password);
@@ -110,7 +110,10 @@ public class RegisterFragment extends Fragment {
 
             @Override
             public void onFailed() {
-                Log.e("subscribe","Error...");
+                Log.e("Error_Register","Erreur lors de la requette HTTP register");
+                TextView txtView = (TextView)view.findViewById(R.id.errorConnect);
+                txtView.setText("Erreur, veuillez réessayer votre inscription !");
+                txtView.setTextColor(getResources().getColor(R.color.colorAccent));
             }
         });
 
