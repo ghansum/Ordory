@@ -46,7 +46,7 @@
                 android:background="@color/colorOrange"
                 android:textColor="@color/colorWhite"
                 android:textSize="24dp"
-                android:text="Enregistrer"
+                android:text="@string/btn_send"
                 />
 
             <TextView

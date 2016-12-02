@@ -28,7 +28,7 @@
             android:layout_marginBottom="0dp"
             android:paddingTop="18dp"
             android:textColor="@color/colorPrimary"
-            android:text="Ordory"/>
+            android:text="@string/text_titleApp"/>
 
         <TextView
             android:layout_width="202dp"
@@ -53,7 +53,7 @@
             android:layout_marginBottom="7dp"
             android:paddingTop="10dp"
             android:textColor="@color/colorPrimary"
-            android:text="Click to connect"/>
+            android:text="@string/text_connect_page_help"/>
 
     </LinearLayout>
 </FrameLayout>
