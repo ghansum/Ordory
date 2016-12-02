@@ -127,9 +127,14 @@ public class EditShoppingListFormFragment extends Fragment {
                 final int idShoppingList = sharedPreferences.getInt("shoppingListIdToEdit", -1);
                 String updatedName = shoppingListNameEdit.getText().toString();
 
+                String isCompleted;
+                if(isActive.isChecked()){
+                    isCompleted = "1";
+                } else {
+                    isCompleted = "0";
+                }
 
-
-                String url= Constant.WS_EDIT_SHOPPINGLIST_URL+"?token="+tokenUser+"&id="+idShoppingList+"&name="+updatedName+"&completed="+true;
+                String url= Constant.WS_EDIT_SHOPPINGLIST_URL+"?token="+tokenUser+"&id="+idShoppingList+"&name="+updatedName+"&completed="+isCompleted;
                 asynctask.execute(url);
             }
         });

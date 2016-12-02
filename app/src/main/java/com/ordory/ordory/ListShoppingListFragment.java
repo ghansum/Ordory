@@ -114,6 +114,7 @@ public class ListShoppingListFragment extends Fragment {
                 JSONObject tmpObj;
                 int id;
                 Date date;
+                String isActive;
 
                 try {
                     listArray = json.getJSONArray("result");
@@ -124,7 +125,12 @@ public class ListShoppingListFragment extends Fragment {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         date = simpleDateFormat.parse(tmpObj.getString("created_date"));
                         name = tmpObj.getString("name");
-                        shopingList = new ShoppingList(id,name,date,false);
+                        isActive = tmpObj.getString("completed");
+                        if(isActive.equals("0")){
+                            shopingList = new ShoppingList(id,name,date, false);
+                        } else {
+                            shopingList = new ShoppingList(id,name,date,true);
+                        }
                         shoppingLists.add(shopingList);
                         Log.e("name", tmpObj.getString("name"));
                     }
