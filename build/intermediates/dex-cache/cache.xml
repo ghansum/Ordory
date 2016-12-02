@@ -1,2 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="d3fc3b61b53172b8f92aeb956447b2dbe9539307">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_9a125479e3648422b171cb7f7bc973e5d027bcc0/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_6f7008954dde80f48aa75c61336d837cac6a6934/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_35d173b2fc1b3d085a6d3bb3ab3588134f08624a/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_72a935ee4a32075219f2e8a1210cebd837277c66/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_99c3cdb26d90c2a3f706c6ded3f283f81a45c9a8/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_2fe7cabcfa482eaa91847122e5b76360b5c80f43/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_3f6c16d2f5c9663d907f6a63ac174c0030c5c449/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_f805052cc0a6a3bddd220ea13dde0eb1341970ee/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.1_0df201c7d7b12b97996e7c12998b71e456242521/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.2.1_3f5a88971416e16a0f25306cabdd3bc935caf560/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.1_b12e1a536f870669cb1dae91dc19092fca90d06b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_a745bb90e439b5a8a31900a96d9ef4edf7e21284/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_3ef7814c324a9e7378bbacfff52b31bb2eafd716/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.1_c5aa78d0e5326f489cfce9a38fa7e6bbd9d98a02/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="54571c6f00d844386804de518ba761a97229e66b">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_ac3e12365a423ab8d2e60f6bc3f0e17456fbbc25/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_9507bed4f9708186f837a998976e0498031a8a5b/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_be9763e1f817da07d96ce34de4684443b11a2d40/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.1_4ced08ac640655bc4875033e8a2e9a638065e48e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.1_5043798c0d352857449f0c4504abdee39c937cd8/classes.dex" />
+    </item>
+
+</items>

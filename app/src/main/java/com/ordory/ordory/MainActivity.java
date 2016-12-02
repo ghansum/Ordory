@@ -1,6 +1,7 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -147,8 +148,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             editor.clear();
             editor.commit();
-            fragment = new ConnectFragment();
-            // setContentView(R.layout.activity_main);
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_subscribe) {
             fragment = new RegisterFragment();
         }else if (id == R.id.nav_userspace) {

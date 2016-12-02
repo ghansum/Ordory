@@ -72,16 +72,11 @@ public class MyAsynctask extends AsyncTask<String, Void, JSONObject>  {
         //Constant.mainObject = new JSONObject(result);
         //Constant.resultJsonConnect = Constant.mainObject.getJSONObject("result");
         //System.out.println("Code : "+Constant.mainObject.getString("code"));
-        try {
-            String codeText = result.getString("code");
-            int code = Integer.parseInt(codeText);
-            if(listner!=null && code == 0){
-                listner.onSuccess(result);
-            }else{
-                listner.onFailed();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        if(listner!=null && result!=null){
+            listner.onSuccess(result);
+        }else{
+            listner.onFailed();
         }
 
     }
