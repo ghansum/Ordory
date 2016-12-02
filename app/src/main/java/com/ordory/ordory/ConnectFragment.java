@@ -84,7 +84,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_connect, container, false);
+        final View view = inflater.inflate(R.layout.fragment_connect, container, false);
 
         connectButton = (Button)view.findViewById(R.id.connect_button);
 
@@ -122,6 +122,10 @@ public class ConnectFragment extends Fragment implements IConnectListner {
 
             @Override
             public void onFailed() {
+                Log.e("Error_Connection","Erreur lors de la requette HTTP");
+                TextView txtView = (TextView)view.findViewById(R.id.errorConnect);
+                txtView.setText("Erreur de connection, veuillez réessayer !");
+                txtView.setTextColor(getResources().getColor(R.color.colorAccent));
 
             }
         });

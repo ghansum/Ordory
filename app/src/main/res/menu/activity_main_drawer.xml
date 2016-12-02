@@ -12,11 +12,11 @@
             android:title="@string/action_login" />
         <item
             android:id="@+id/nav_products"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_list_shop"
             android:title="@string/action_list" />
         <item
             android:id="@+id/nav_addList"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_add_shopping"
             android:title="@string/action_addList" />
         <item
             android:id="@+id/nav_subscribe"

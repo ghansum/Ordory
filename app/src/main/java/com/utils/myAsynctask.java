@@ -46,7 +46,6 @@ public class MyAsynctask extends AsyncTask<String, Void, JSONObject>  {
             conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
             conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
             in=conn.getInputStream();
-            System.out.println("Before while....");
             // open the stream and put it into BufferedReader
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line;
@@ -74,9 +73,10 @@ public class MyAsynctask extends AsyncTask<String, Void, JSONObject>  {
         //Constant.resultJsonConnect = Constant.mainObject.getJSONObject("result");
         //System.out.println("Code : "+Constant.mainObject.getString("code"));
         try {
-            System.out.print("Result : "+result.getString("result"));
-            if(listner!=null){
+            if(listner!=null && result.getString("code")=="0"){
                 listner.onSuccess(result);
+            }else{
+                listner.onFailed();
             }
         } catch (JSONException e) {
             e.printStackTrace();
