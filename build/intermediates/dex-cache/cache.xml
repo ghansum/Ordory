@@ -133,6 +133,11 @@
         revision="24.0.2"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
         <dex dex="/Users/Nourdine/AndroidStudioProjects/Ordory/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.2.1_5043798c0d352857449f0c4504abdee39c937cd8.jar" />
+        jar="C:\Users\Patri\AndroidStudioProjects\Ordory\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.2"
+        sha1="84315fb36171d0ee378b680ae6585e91de1e3742">
+        <dex dex="C:\Users\Patri\AndroidStudioProjects\Ordory\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_08dfdb29b24053d0089af9fdd2b4fd5b3e2c96c6\classes.dex" />
     </item>
 
 </items>
