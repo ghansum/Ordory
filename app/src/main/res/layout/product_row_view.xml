@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <ImageView
+    <TextView
         android:id="@+id/product_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:background="#AAA"/>
+        android:layout_width="65dp"
+        android:layout_height="70dp"
+        tools:background="@drawable/ic_wallpaper"/>
 
     <TextView
     android:id="@+id/productName"

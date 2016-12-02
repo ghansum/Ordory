@@ -80,7 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:layout_marginTop="30dp"
-                        android:textSize="76dp"
+                        android:textSize="70dp"
                         android:textColor="@color/colorBlueGrey"
                         android:textAlignment="center"
                         android:text="5"/>
