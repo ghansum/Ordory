@@ -1,30 +1,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_products"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/colorWhite"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ListShoppingListFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="3dp"
         android:layout_marginBottom="40dp"
-        android:weightSum="1"
+        android:weightSum="2"
+        android:background="@color/colorWhite"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="230dp"
-            android:layout_height="60dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <TextView
-                android:layout_width="243dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="22dp"
+                android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="@string/list_shoppinglist_title"
                 android:layout_marginTop="10dp" />
@@ -32,17 +32,18 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="110dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <Button
                 android:id="@+id/button_add_shopping_list"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
                 android:background="@drawable/roundedbouton"
-                android:layout_gravity="right"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="0dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="3dp"
                 android:textSize="30dp"
                 android:textAlignment="center"
                 android:text="+" />
@@ -63,7 +64,8 @@
                 android:id="@+id/product_list_view"
                 android:layout_width="match_parent"
                 android:layout_marginTop="17dp"
-                android:layout_height="421dp"></ListView>
+                android:paddingBottom="13dp"
+                android:layout_height="390dp"></ListView>
 
         </LinearLayout>
     </ScrollView>

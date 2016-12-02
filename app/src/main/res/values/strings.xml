@@ -37,6 +37,8 @@
     <string name="btn_connect">Connexion</string>
     <string name="text_connect_page">Connexion</string>
     <string name="btn_send">Enregistrer</string>
+    <string name="txt_pub_userspace">Gérez vos listes de courses</string>
+    <string name="txt_count_userspace">liste(s)</string>
 
 
     <!-- String for list shopping list view-->

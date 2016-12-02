@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MyspaceFragment">
 
@@ -27,11 +25,10 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:text="@string/myspace_title" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="115dp"
                 android:layout_marginTop="26dp"
-                android:layout_marginRight="9dp"
                 android:paddingLeft="12dp"
                 android:background="@color/colorGrey"
                 android:orientation="vertical"
@@ -49,7 +46,7 @@
                     android:id="@+id/txt_userspace_lastname"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="0dp"
                     android:textSize="22dp"
                     android:textColor="@color/colorBlueGrey"
                     android:text=" "/>
@@ -58,22 +55,23 @@
                     android:id="@+id/txt_userspace_email"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="0dp"
                     android:textSize="22dp"
                     android:textColor="@color/colorBlueGrey"
                     android:text=" "/>
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:weightSum="1"
-                android:layout_marginTop="12dp"
+                android:weightSum="2"
+                android:layout_marginTop="7dp"
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:layout_width="166dp"
+                    android:layout_width="match_parent"
                     android:layout_height="203dp"
+                    android:layout_weight="1"
                     android:background="@color/colorBlue"
                     android:layout_gravity="left|center_vertical">
 
@@ -96,36 +94,38 @@
                         android:layout_alignParentBottom="true"
                         android:textColor="@color/colorBlueGrey"
                         android:textAlignment="center"
-                        android:text="liste(s)"/>
+                        android:text="@string/txt_count_userspace"/>
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="166dp"
+                    android:layout_width="match_parent"
                     android:layout_height="203dp"
                     android:background="@color/colorCyan"
-                    android:layout_marginLeft="7dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_gravity="right|center_vertical">
 
                     <TextView
                         android:id="@+id/redirectProduct"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginLeft="33dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:onClick=""
                         android:background="@drawable/ic_add_shopping"/>
 
                     <TextView
                         android:id="@+id/txt_userspace_product"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
-                        android:layout_marginTop="85dp"
+                        android:layout_marginTop="89dp"
                         android:textSize="21dp"
                         android:layout_alignParentBottom="true"
                         android:textColor="@color/colorBlueGrey"
                         android:textAlignment="center"
-                        android:text="Voir mes listes"/>
+                        android:text="@string/txt_pub_userspace"/>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
