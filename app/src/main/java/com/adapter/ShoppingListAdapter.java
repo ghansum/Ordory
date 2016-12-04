@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.holder.ShoppingListViewHolder;
@@ -65,6 +66,9 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
         final ShoppingList shoppingList = getItem(position);
 
         viewHolder.name.setText(shoppingList.getName());
+
+        ImageView imgView = (ImageView)convertView.findViewById(R.id.shoppingList_image);
+        imgView.setBackgroundResource(R.mipmap.ic_launcher);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
 

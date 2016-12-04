@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.holder.ProductViewHolder;
@@ -51,6 +52,7 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             viewHolder = new ProductViewHolder();
             viewHolder.name = (TextView) convertView.findViewById(R.id.productName);
             viewHolder.price = (TextView) convertView.findViewById(R.id.productPrice);
+            viewHolder.quantity = (TextView) convertView.findViewById(R.id.productQuantity);
             viewHolder.editButton = (Button) convertView.findViewById(R.id.button_edit_product);
             viewHolder.deleteButton = (Button) convertView.findViewById(R.id.button_delete_product);
             //viewHolder.quantity = (TextView) convertView.findViewById(R.id.productQuantity);
@@ -60,8 +62,12 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
         final Product product = getItem(position);
 
-        viewHolder.name.setText(product.getQuantity()+"x "+product.getName());
+        ImageView imgView = (ImageView)convertView.findViewById(R.id.product_image);
+        imgView.setBackgroundResource(R.drawable.ic_photo);
+
+        viewHolder.name.setText(product.getName());
         viewHolder.price.setText("Prix unitaire : "+product.getPrice()+" €");
+        viewHolder.quantity.setText("Quantité : "+ product.getQuantity());
 
         final MyAsynctask asyncTask = new MyAsynctask();
 

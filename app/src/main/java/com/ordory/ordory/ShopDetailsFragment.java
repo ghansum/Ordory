@@ -132,7 +132,7 @@ public class ShopDetailsFragment extends Fragment {
                     ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
                     listProductsView.setAdapter(productAdapter);
                     if (products.size() > 0){
-                        totalPrice.setText("Prix total : " + countTotalPrice());
+                        totalPrice.setText("Prix total : " + countTotalPrice()+ " €");
                     }
                     edit.putInt("nbProduct",productCpt);
                     edit.commit();

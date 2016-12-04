@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <TextView
+    <ImageView
         android:id="@+id/shoppingList_image"
         android:layout_width="65dp"
         android:layout_height="70dp"
