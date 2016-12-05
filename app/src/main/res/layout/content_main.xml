@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeFragment"
-    android:background="@color/colorWhite"
+    android:background="@drawable/route"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -26,33 +26,25 @@
             android:layout_marginTop="23dp"
             android:layout_marginBottom="0dp"
             android:paddingTop="18dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPink"
             android:text="@string/text_titleApp"/>
 
         <TextView
             android:layout_width="202dp"
             android:layout_height="2dip"
             android:layout_gravity="center"
-            android:background="@color/colorPrimaryDark" />
+            android:background="@color/colorPink" />
 
         <Button
             android:id="@+id/redirectConnect"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="230dp"
             android:layout_gravity="center"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:background="@drawable/ic_lock_outline"/>
-
-        <TextView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:textSize="17dp"
-            android:textAlignment="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="7dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/text_connect_page_help"/>
+            android:layout_height="50dp"
+            android:textSize="23dp"
+            android:text="@string/text_connect_page_help"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBlue"/>
 
     </LinearLayout>
 </FrameLayout>
