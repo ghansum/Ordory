@@ -39,6 +39,7 @@
     <string name="btn_send">Enregistrer</string>
     <string name="txt_pub_userspace">Gérez vos listes de courses</string>
     <string name="txt_count_userspace">liste(s)</string>
+    <string name="slogan">Commander librement</string>
 
 
     <!-- String for list shopping list view-->
@@ -60,5 +61,6 @@
     <string name="product_name">Nom du produit</string>
     <string name="product_price">Prix du produit</string>
     <string name="product_quantity">Quantité</string>
+    <string name="title_activity_shop">ShopActivity</string>
 
 </resources>

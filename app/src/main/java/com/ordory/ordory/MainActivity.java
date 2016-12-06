@@ -3,19 +3,24 @@ package com.ordory.ordory;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import org.json.JSONException;
 
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private Button btnview = null;
     public SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    FrameLayout frame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
         sharedPreferences = getSharedPreferences("mySharedPref",0);
         editor = sharedPreferences.edit();
+        frame = (FrameLayout) findViewById(R.id.homeFragment);
         /*
         TODO: connect the user and redirect him in another page ff
          */
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    frame.setBackgroundColor(Color.WHITE);
                     fragment = new ConnectFragment().newInstance("","");
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.homeFragment, fragment);
@@ -75,14 +83,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Log.e("drawer", drawer.toString());
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            //frame.setBackgroundResource(R.drawable.route);
         }
-    }
-
-    public void saveInfoUser() throws JSONException {
 
     }
 
@@ -137,6 +144,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         //Fragment fragment = null;
         Class fragmentClass = null;
+        frame = (FrameLayout) findViewById(R.id.homeFragment);
 
         if (id == R.id.nav_login) {
             // Handle the login action
@@ -156,10 +164,13 @@ public class MainActivity extends AppCompatActivity
             fragment = new MyspaceFragment();
         }
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.homeFragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        if(fragment != null){
+            frame.setBackgroundColor(Color.WHITE);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.homeFragment, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

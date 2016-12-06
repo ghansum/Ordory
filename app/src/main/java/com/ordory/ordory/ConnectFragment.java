@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.utils.Constant;
@@ -43,6 +45,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
     private Fragment frg = null;
     public SharedPreferences sharedPreference;
     private JSONObject resultJSON;
+    FrameLayout frame;
 
     // TODO: Rename and change types of parameters
     private String mParam1;

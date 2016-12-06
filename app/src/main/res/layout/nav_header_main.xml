@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon"/>
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -30,6 +30,6 @@
         android:id="@+id/slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Commander librement" />
+        android:text="@string/slogan" />
 
 </LinearLayout>

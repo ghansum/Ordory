@@ -80,11 +80,10 @@ public class MyspaceFragment extends Fragment {
         txtFirstName = (TextView)view.findViewById(R.id.txt_userspace_firstname);
         txtLastName = (TextView)view.findViewById(R.id.txt_userspace_lastname);
         txtEmail = (TextView)view.findViewById(R.id.txt_userspace_email);
-        txtNblistShop = (TextView)view.findViewById(R.id.txt_userspace_numberListshop);
 
-        txtFirstName.setText("Nom : "+sharedPreferences.getString("firstName","undefined"));
-        txtLastName.setText("Prénom : "+sharedPreferences.getString("lastName","undefined"));
-        txtEmail.setText("E-mail : "+sharedPreferences.getString("email","undefined"));
+        txtFirstName.setText(sharedPreferences.getString("firstName","undefined"));
+        txtLastName.setText(sharedPreferences.getString("lastName","undefined"));
+        txtEmail.setText(sharedPreferences.getString("email","undefined"));
 
         //int nbList = sharedPreferences.getInt("nbListShop",-1);
         return view;
