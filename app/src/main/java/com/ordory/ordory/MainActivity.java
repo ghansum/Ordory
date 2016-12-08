@@ -55,6 +55,15 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences = getSharedPreferences("mySharedPref",0);
         editor = sharedPreferences.edit();
         frame = (FrameLayout) findViewById(R.id.homeFragment);
+        // check if the user is already connected and redirect him to the listShop page
+        boolean isConnected = sharedPreferences.getBoolean("is_connected",false);
+        if(isConnected){
+            frame.setBackgroundColor(Color.WHITE);
+            fragment = new ListShoppingListFragment().newInstance("","");
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.homeFragment, fragment);
+            transaction.commit();
+        }
         /*
         TODO: connect the user and redirect him in another page ff
          */
@@ -67,7 +76,7 @@ public class MainActivity extends AppCompatActivity
                     fragment = new ConnectFragment().newInstance("","");
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.homeFragment, fragment);
-                    transaction.addToBackStack(null);
+                    //transaction.addToBackStack(null);
                     transaction.commit();
                 }
             }
@@ -83,7 +92,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        Log.e("drawer", drawer.toString());
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -137,11 +145,11 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        boolean isConnected = sharedPreferences.getBoolean("is_connected",false);
         //Fragment fragment = null;
         Class fragmentClass = null;
         frame = (FrameLayout) findViewById(R.id.homeFragment);
@@ -165,11 +173,18 @@ public class MainActivity extends AppCompatActivity
         }
 
         if(fragment != null){
-            frame.setBackgroundColor(Color.WHITE);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.homeFragment, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            if(id == R.id.nav_subscribe || id == R.id.nav_login){
+                frame.setBackgroundColor(Color.WHITE);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeFragment, fragment);
+                transaction.commit();
+            }else{
+                frame.setBackgroundColor(Color.WHITE);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.homeFragment, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -64,7 +64,6 @@ public class ProductAdapter extends ArrayAdapter<Product>{
 
         ImageView imgView = (ImageView)convertView.findViewById(R.id.product_image);
         imgView.setBackgroundResource(R.drawable.ic_photo);
-
         viewHolder.name.setText(product.getName());
         viewHolder.price.setText("Prix unitaire : "+product.getPrice()+" €");
         viewHolder.quantity.setText("Quantité : "+ product.getQuantity());

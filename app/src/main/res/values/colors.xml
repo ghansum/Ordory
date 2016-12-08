@@ -11,4 +11,5 @@
     <color name="colorBlueGrey">#263238</color>
     <color name="colorGrey">#eee</color>
     <color name="colorCyan">#26b6ce</color>
+    <color name="transparency">#80000000</color>
 </resources>
