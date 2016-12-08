@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.utils.Constant;
 import com.utils.MyAsynctask;
@@ -125,11 +126,10 @@ public class ConnectFragment extends Fragment implements IConnectListner {
 
             @Override
             public void onFailed() {
-                Log.e("Error_Connection","Erreur lors de la requette HTTP");
                 TextView txtView = (TextView)view.findViewById(R.id.errorConnect);
                 txtView.setText("Erreur de connection, veuillez réessayer !");
                 txtView.setTextColor(getResources().getColor(R.color.colorAccent));
-
+                Toast.makeText(getActivity(), "Erreur lors de la connexion ! Veuillez réessayer", Toast.LENGTH_LONG).show();
             }
         });
 

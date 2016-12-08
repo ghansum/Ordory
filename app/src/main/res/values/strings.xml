@@ -32,7 +32,7 @@
 
     <!-- String View -->
     <string name="btn_edit">Modifier</string>
-    <string name="text_connect_page_help">Click to connect</string>
+    <string name="text_connect_page_help">Connexion</string>
     <string name="text_titleApp">Ordory</string>
     <string name="btn_connect">Connexion</string>
     <string name="text_connect_page">Connexion</string>

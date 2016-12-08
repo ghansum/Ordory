@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adapter.ProductAdapter;
 import com.holder.ProductViewHolder;
@@ -54,6 +55,8 @@ public class ShopDetailsFragment extends Fragment {
     private Button editProductButton;
     private Button deleteProductButton;
     private int productCpt=0;
+    private boolean is_completed;
+
 
     public ShopDetailsFragment() {
         // Required empty public constructor
@@ -102,8 +105,9 @@ public class ShopDetailsFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("mySharedPref",0);
         final SharedPreferences.Editor edit = sharedPreferences.edit();
         boolean statusConnect = sharedPreferences.getBoolean("is_connected",false);
+        is_completed = sharedPreferences.getBoolean("list_status",false);
         String tokenUser = sharedPreferences.getString("userToken","");
-        int listshopId = sharedPreferences.getInt("listshopId",0);
+        final int listshopId = sharedPreferences.getInt("listshopId",0);
         title.setText(sharedPreferences.getString("listshopName",""));
         final MyAsynctask asyncTask = new MyAsynctask();
 
@@ -115,14 +119,14 @@ public class ShopDetailsFragment extends Fragment {
                 JSONObject tmpObj;
                 int id, qty;
                 double price;
-                JSONArray lisProducts;
+                JSONArray listProducts;
 
                 try {
-                    lisProducts = obj.getJSONArray("result");
-                    System.out.println("Data Product : " + lisProducts);
-                    for (int i = 0; i < lisProducts.length(); i++) {
+                    listProducts = obj.getJSONArray("result");
+                    System.out.println("Data Product : " + listProducts);
+                    for (int i = 0; i < listProducts.length(); i++) {
                         productCpt += 1;
-                        tmpObj = lisProducts.getJSONObject(i);
+                        tmpObj = listProducts.getJSONObject(i);
                         id = Integer.parseInt(tmpObj.getString("id"));
                         price = Double.parseDouble(tmpObj.getString("price"));
                         qty = Integer.parseInt(tmpObj.getString("quantity"));
@@ -151,9 +155,13 @@ public class ShopDetailsFragment extends Fragment {
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new ProductFormFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.fragment_shoppingList, fragment).addToBackStack(null).commit();
+                if(is_completed){
+                    Toast.makeText(getActivity(), "Cette liste est déjà complet !", Toast.LENGTH_LONG).show();
+                }else{
+                    Fragment fragment = new ProductFormFragment();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_shoppingList, fragment).addToBackStack(null).commit();
+                }
             }
         });
 

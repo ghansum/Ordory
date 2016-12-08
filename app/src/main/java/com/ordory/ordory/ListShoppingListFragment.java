@@ -144,6 +144,7 @@ public class ListShoppingListFragment extends Fragment {
                             ShoppingList itemselected = (ShoppingList) listShoppingListView.getItemAtPosition(position);
                             editor.putString("listshopName",itemselected.getName());
                             editor.putInt("listshopId",itemselected.getId());
+                            editor.putBoolean("list_status",itemselected.isCompleted());
                             editor.commit();
                             Fragment fragment = new ShopDetailsFragment();
                             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
