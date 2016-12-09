@@ -41,23 +41,23 @@
 
     <Button
         android:id="@+id/button_edit_product"
-        android:layout_width="75dp"
+        android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignTop="@+id/product_image"
         android:layout_alignParentRight="true"
-        android:background="@color/colorBlue"
+        android:background="@drawable/ic_action_edit"
         android:textAlignment="center"
-        android:text="edit" />
+        android:text="" />
 
     <Button
         android:id="@+id/button_delete_product"
-        android:layout_width="75dp"
+        android:layout_width="35dp"
         android:layout_height="35dp"
         android:textAlignment="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_below="@+id/button_edit_product"
-        android:background="@color/colorOrange"
+        android:background="@drawable/ic_delete"
         android:layout_alignParentRight="true"
-        android:text="Supp"/>
+        android:text=""/>
 
 </RelativeLayout>

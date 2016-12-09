@@ -52,6 +52,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
+    MyAsynctask asyncTask=null;
 
     public ConnectFragment() {
         // Required empty public constructor
@@ -97,8 +98,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
         editPwd = (EditText) view.findViewById(R.id.password_connect);
 
         // on click event
-        final MyAsynctask asyncTask = new MyAsynctask();
-
+        asyncTask = new MyAsynctask();
         asyncTask.setListner(new IConnectListner() {
             @Override
             public void onSuccess(JSONObject json) {
