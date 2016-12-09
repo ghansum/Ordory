@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.utils.Constant;
 import com.utils.MyAsynctask;
@@ -109,8 +110,8 @@ public class RegisterFragment extends Fragment {
             }
 
             @Override
-            public void onFailed() {
-                Log.e("Error_Register","Erreur lors de la requette HTTP register");
+            public void onFailed(String msg) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                 TextView txtView = (TextView)view.findViewById(R.id.errorConnect);
                 txtView.setText("Erreur, veuillez réessayer votre inscription !");
                 txtView.setTextColor(getResources().getColor(R.color.colorAccent));

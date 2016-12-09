@@ -147,8 +147,8 @@ public class ShopDetailsFragment extends Fragment {
             }
 
             @Override
-            public void onFailed() {
-
+            public void onFailed(String msg) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
             }
         });
 

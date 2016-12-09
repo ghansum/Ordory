@@ -113,7 +113,8 @@ public class ProductFormFragment extends Fragment {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(String msg) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                 blocInfo.setText("Erreur lors de la creation du produit");
             }
         });

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.utils.Constant;
 import com.utils.MyAsynctask;
@@ -114,7 +115,8 @@ public class EditShoppingListFormFragment extends Fragment {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(String msg) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                 shoppingListFormErr.setText("Erreur lors de la mise à jour");
             }
         });

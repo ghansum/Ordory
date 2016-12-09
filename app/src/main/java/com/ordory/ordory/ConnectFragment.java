@@ -125,11 +125,11 @@ public class ConnectFragment extends Fragment implements IConnectListner {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(String msg) {
                 TextView txtView = (TextView)view.findViewById(R.id.errorConnect);
                 txtView.setText("Erreur de connection, veuillez réessayer !");
                 txtView.setTextColor(getResources().getColor(R.color.colorAccent));
-                Toast.makeText(getActivity(), "Erreur lors de la connexion ! Veuillez réessayer", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -179,8 +179,8 @@ public class ConnectFragment extends Fragment implements IConnectListner {
     }
 
     @Override
-    public void onFailed() {
-
+    public void onFailed(String msg) {
+        //Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
     /**

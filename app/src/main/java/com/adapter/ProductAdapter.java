@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.holder.ProductViewHolder;
 import com.models.Product;
@@ -79,8 +80,8 @@ public class ProductAdapter extends ArrayAdapter<Product>{
             }
 
             @Override
-            public void onFailed() {
-
+            public void onFailed(String msg) {
+                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
             }
         });
 

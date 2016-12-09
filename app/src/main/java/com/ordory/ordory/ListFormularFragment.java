@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.utils.Constant;
 import com.utils.MyAsynctask;
@@ -104,9 +105,11 @@ public class ListFormularFragment extends Fragment {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(String msg) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                 shoppingListFormErr.setText("Erreur lors de la creation de la liste");
             }
+
         });
 
         confirmButton.setOnClickListener(new View.OnClickListener(){

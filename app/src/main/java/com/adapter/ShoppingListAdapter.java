@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.holder.ShoppingListViewHolder;
 import com.models.ShoppingList;
@@ -86,8 +87,8 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
             }
 
             @Override
-            public void onFailed() {
-
+            public void onFailed(String msg) {
+                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
             }
         });
 

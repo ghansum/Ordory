@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.adapter.ShoppingListAdapter;
 import com.models.ShoppingList;
@@ -169,8 +170,8 @@ public class ListShoppingListFragment extends Fragment {
             }
 
             @Override
-            public void onFailed() {
-
+            public void onFailed(String msg) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
             }
         });
 

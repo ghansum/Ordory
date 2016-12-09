@@ -9,6 +9,6 @@ import org.json.JSONObject;
 public interface IConnectListner {
 
     public void onSuccess(JSONObject obj);
-    public void onFailed();
+    public void onFailed(String msg);
 
 }
