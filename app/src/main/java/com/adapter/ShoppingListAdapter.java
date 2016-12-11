@@ -65,8 +65,8 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList>{
         }
 
         final ShoppingList shoppingList = getItem(position);
-
-        viewHolder.name.setText(shoppingList.getName());
+        String listName = shoppingList.getName();
+        viewHolder.name.setText(listName);
 
         ImageView imgView = (ImageView)convertView.findViewById(R.id.shoppingList_image);
         imgView.setBackgroundResource(R.mipmap.ic_launcher);

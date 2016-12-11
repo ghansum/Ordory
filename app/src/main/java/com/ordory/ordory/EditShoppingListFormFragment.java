@@ -128,6 +128,9 @@ public class EditShoppingListFormFragment extends Fragment {
                 String tokenUser = sharedPreferences.getString("userToken", "");
                 final int idShoppingList = sharedPreferences.getInt("shoppingListIdToEdit", -1);
                 String updatedName = shoppingListNameEdit.getText().toString();
+                if(updatedName.contains(" ")){
+                    updatedName=updatedName.replace(" ","*");
+                }
 
                 String isCompleted;
                 if(isActive.isChecked()){

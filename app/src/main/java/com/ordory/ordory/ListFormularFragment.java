@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,6 +117,9 @@ public class ListFormularFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 shoppingListName = shoppingListNameEdit.getText().toString();
+                if(shoppingListName.contains(" ")){
+                    shoppingListName=shoppingListName.replace(" ","*");
+                }
                 String url = Constant.WS_CREATE_SHOPPINGLIST_URL+"?token="+tokenUser+"&name="+shoppingListName;
                 asyncTask.execute(url);
             }

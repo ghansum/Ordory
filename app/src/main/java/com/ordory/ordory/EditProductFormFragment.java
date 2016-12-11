@@ -135,7 +135,9 @@ public class EditProductFormFragment extends Fragment {
                 productName = productName_edit.getText().toString();
                 price = price_edit.getText().toString();
                 quantity = quantity_edit.getText().toString();
-
+                if(productName.contains(" ")){
+                    productName = productName.replace(" ","*");
+                }
                 String url = Constant.WS_EDIT_PRODUCT_URL+"?token="+userToken+"&id="+idProductToEdit+"&name="+productName+"&quantity="+quantity+"&price="+price;
                 asyncTask.execute(url);
             }

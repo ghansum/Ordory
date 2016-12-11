@@ -126,6 +126,12 @@ public class RegisterFragment extends Fragment {
                         password = editPwd.getText().toString();
                         lastname = editlastName.getText().toString();
                         firstname = editfirstName.getText().toString();
+                        if(firstname.contains(" ")){
+                            firstname = firstname.replace(" ","*");
+                        }
+                        if(lastname.contains(" ")){
+                            lastname = lastname.replace(" ","*");
+                        }
                         String url = Constant.WS_SUBSCRIBE_URL+"?email="+email+"&password="+password+"&firstname="+firstname+"&lastname="+lastname;
                         asyncTask.execute(url);
                     }

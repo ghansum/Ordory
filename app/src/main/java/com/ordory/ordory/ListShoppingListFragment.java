@@ -126,6 +126,9 @@ public class ListShoppingListFragment extends Fragment {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         date = simpleDateFormat.parse(tmpObj.getString("created_date"));
                         name = tmpObj.getString("name");
+                        if(name.contains("*")){
+                            name = name.replace("*"," ");
+                        }
                         isActive = tmpObj.getString("completed");
                         if(isActive.equals("0")){
                             shopingList = new ShoppingList(id,name,date, false);

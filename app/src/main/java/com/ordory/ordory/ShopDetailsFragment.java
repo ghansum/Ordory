@@ -131,6 +131,9 @@ public class ShopDetailsFragment extends Fragment {
                         price = Double.parseDouble(tmpObj.getString("price"));
                         qty = Integer.parseInt(tmpObj.getString("quantity"));
                         name = tmpObj.getString("name");
+                        if(name.contains("*")){
+                            name = name.replace("*"," ");
+                        }
                         products.add(new Product(id, name, qty, price));
                     }
                     ProductAdapter productAdapter = new ProductAdapter(getActivity(), products);
