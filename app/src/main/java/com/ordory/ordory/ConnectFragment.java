@@ -99,6 +99,20 @@ public class ConnectFragment extends Fragment implements IConnectListner {
 
         // on click event
         asyncTask = new MyAsynctask();
+
+        connectButton.setOnClickListener(
+                new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        email = editEmail.getText().toString();
+                        password = editPwd.getText().toString();
+                        String url = Constant.WS_CONNECT_URL+"?email="+email+"&password="+password;
+                        asyncTask.execute(url);
+                    }
+                }
+        );
+
         asyncTask.setListner(new IConnectListner() {
             @Override
             public void onSuccess(JSONObject json) {
@@ -133,18 +147,6 @@ public class ConnectFragment extends Fragment implements IConnectListner {
             }
         });
 
-        connectButton.setOnClickListener(
-                new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        email = editEmail.getText().toString();
-                        password = editPwd.getText().toString();
-                        String url = Constant.WS_CONNECT_URL+"?email="+email+"&password="+password;
-                        asyncTask.execute(url);
-                    }
-                }
-        );
         // Inflate the layout for this fragment
         return view;
     }

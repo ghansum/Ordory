@@ -1,9 +1,12 @@
 package com.ordory.ordory;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -21,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -52,6 +56,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        if(!verifyNetwork()){
+            Toast toast = Toast.makeText(getApplicationContext(), "Warning, Please check your internet access", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
         sharedPreferences = getSharedPreferences("mySharedPref",0);
         editor = sharedPreferences.edit();
         frame = (FrameLayout) findViewById(R.id.homeFragment);
@@ -82,7 +91,6 @@ public class MainActivity extends AppCompatActivity
             }
         );
 
-        //Toast.makeText(MainActivity.this, "Inscription réussi avec succès !", Toast.LENGTH_SHORT).show();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -195,5 +203,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public boolean verifyNetwork() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
