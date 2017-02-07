@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
     public SharedPreferences sharedPreference;
     private JSONObject resultJSON;
     FrameLayout frame;
+    private ProgressBar mProgress;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -96,7 +99,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
         infoConnectText = (TextView)view.findViewById(R.id.errorConnect);
         editEmail = (EditText) view.findViewById(R.id.email_connect);
         editPwd = (EditText) view.findViewById(R.id.password_connect);
-
+        mProgress = (ProgressBar) view.findViewById(R.id.loader);
         // on click event
         asyncTask = new MyAsynctask();
 
@@ -120,6 +123,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
                 SharedPreferences.Editor editor = sharedPreference.edit();
 
                 try {
+                    mProgress.setVisibility(view.VISIBLE);
                     resultJSON = json.getJSONObject("result");
                     editor.putString("firstName", resultJSON.getString("firstname"));
                     editor.putString("lastName", resultJSON.getString("lastname"));
@@ -184,6 +188,7 @@ public class ConnectFragment extends Fragment implements IConnectListner {
     public void onFailed(String msg) {
         //Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
